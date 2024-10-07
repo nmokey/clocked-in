@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d13f12cpbva8b"
+path="res://.godot/imported/let me break it down for you mark.mp3-f669f7d55950465782a502e28cfcaf39.mp3str"
+
+[deps]
+
+source_file="res://Art/Audio/let me break it down for you mark.mp3"
+dest_files=["res://.godot/imported/let me break it down for you mark.mp3-f669f7d55950465782a502e28cfcaf39.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

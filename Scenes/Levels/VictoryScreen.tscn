@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5btk4icxp61c"]
+
+[ext_resource type="Script" path="res://Scenes/Levels/victory_screen2.gd" id="1_2jncn"]
+[ext_resource type="LabelSettings" uid="uid://1cnb4418rr7" path="res://Art/Fonts/pixelized_label_large.tres" id="2_32rlp"]
+[ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="3_qoi86"]
+[ext_resource type="Texture2D" uid="uid://c75fanx85g4rl" path="res://Art/Sprites/logo.png" id="4_848g5"]
+[ext_resource type="Texture2D" uid="uid://cqvuj6yed1hmt" path="res://Art/Sprites/tweet.png" id="5_jgsaq"]
+[ext_resource type="AudioStream" uid="uid://cy0ldtexs8ifu" path="res://Art/Audio/My_Song_2-_1_.ogg" id="6_6pmjb"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2jncn")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = 80.0
+offset_right = 76.0
+offset_bottom = 135.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Congratulations!
+"
+label_settings = ExtResource("2_32rlp")
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -105.0
+offset_top = -126.0
+offset_right = 96.0
+offset_bottom = -0.999969
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.41913, 1.41913)
+text = "'E' to see credits"
+label_settings = ExtResource("3_qoi86")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(363, 116)
+scale = Vector2(0.743421, 0.743421)
+texture = ExtResource("4_848g5")
+
+[node name="Tweet" type="Sprite2D" parent="."]
+position = Vector2(391, 249)
+scale = Vector2(0.428499, 0.428499)
+texture = ExtResource("5_jgsaq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_6pmjb")
+volume_db = -1.0
+autoplay = true

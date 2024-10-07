@@ -1,0 +1,197 @@
+[gd_scene load_steps=23 format=3 uid="uid://cako3ay6irx5m"]
+
+[ext_resource type="Script" path="res://Scripts/FSM/FiniteStateMachine.gd" id="1_0q51m"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerIdleState.gd" id="2_m3bf8"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerAttackState.gd" id="3_th73d"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerWalkState.gd" id="4_pmrmd"]
+[ext_resource type="Texture2D" uid="uid://dfvrbdvys27ey" path="res://Art/Sprites/cursorsprite.svg" id="8_l0kt1"]
+[ext_resource type="Texture2D" uid="uid://dta02owj1xvtx" path="res://Art/Sprites/email.png" id="9_2bwxu"]
+[ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="10_dx140"]
+[ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="11_rkssr"]
+[ext_resource type="Script" path="res://Scenes/Interactables/area_exit3.gd" id="13_r53hl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnucc"]
+size = Vector2(7.37566, 10.22)
+
+[sub_resource type="GDScript" id="GDScript_5xsr5"]
+script/source = "extends Node
+
+@export var anim : String
+@export var damage : int
+"
+
+[sub_resource type="Curve" id="Curve_h7vsg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.71062, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_j105i"]
+curve = SubResource("Curve_h7vsg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wrxbo"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 8.0
+angle_min = -90.0
+angle_max = 90.0
+direction = Vector3(0, -1, 0)
+spread = 90.0
+initial_velocity_min = 10.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 80, 0)
+scale_max = 4.0
+color = Color(0.992157, 0, 0, 1)
+alpha_curve = SubResource("CurveTexture_j105i")
+
+[sub_resource type="Animation" id="Animation_jtcnw"]
+resource_name = "Attack"
+length = 0.8
+
+[sub_resource type="Animation" id="Animation_a1dma"]
+resource_name = "Dash"
+length = 0.4
+
+[sub_resource type="Animation" id="Animation_fkgk5"]
+resource_name = "Death"
+length = 0.4
+
+[sub_resource type="Animation" id="Animation_1i780"]
+resource_name = "Idle"
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_7c1ec"]
+resource_name = "MoonKick"
+length = 0.4
+step = 0.05
+
+[sub_resource type="Animation" id="Animation_wo7cn"]
+resource_name = "Walk"
+length = 0.4
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gtuut"]
+_data = {
+"Attack": SubResource("Animation_jtcnw"),
+"Dash": SubResource("Animation_a1dma"),
+"Death": SubResource("Animation_fkgk5"),
+"Idle": SubResource("Animation_1i780"),
+"MoonKick": SubResource("Animation_7c1ec"),
+"Walk": SubResource("Animation_wo7cn")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtoj4"]
+size = Vector2(25, 30)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
+top_level = true
+texture_filter = 1
+position = Vector2(115, 163)
+floor_stop_on_slope = false
+floor_block_on_wall = false
+
+[node name="BodyCollisionShape" type="CollisionShape2D" parent="Player"]
+position = Vector2(-4, 1)
+scale = Vector2(1.35581, 1.17417)
+shape = SubResource("RectangleShape2D_cnucc")
+
+[node name="FSM" type="Node" parent="Player" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_0q51m")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
+script = ExtResource("2_m3bf8")
+animator = NodePath("../../AnimationPlayer")
+
+[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator", "attacks")]
+script = ExtResource("3_th73d")
+animator = NodePath("../../AnimationPlayer")
+attacks = [null, null]
+
+[node name="PunchAttack" type="Node" parent="Player/FSM/Attacking"]
+script = SubResource("GDScript_5xsr5")
+anim = "Attack"
+damage = 55
+
+[node name="KickAttack" type="Node" parent="Player/FSM/Attacking"]
+script = SubResource("GDScript_5xsr5")
+anim = "MoonKick"
+damage = 25
+
+[node name="Moving" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
+script = ExtResource("4_pmrmd")
+movespeed = 140
+animator = NodePath("../../AnimationPlayer")
+
+[node name="hit_particle_blood" type="GPUParticles2D" parent="Player"]
+emitting = false
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_wrxbo")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_gtuut")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(-1, 6)
+scale = Vector2(0.019, 0.019)
+texture = ExtResource("8_l0kt1")
+
+[node name="Email" type="Sprite2D" parent="."]
+position = Vector2(375, 244)
+scale = Vector2(0.59705, 0.59705)
+texture = ExtResource("9_2bwxu")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Email"]
+offset_left = -510.845
+offset_top = -370.153
+offset_right = -98.8447
+offset_bottom = -315.153
+scale = Vector2(2.55285, 2.98239)
+theme_override_fonts/normal_font = ExtResource("10_dx140")
+text = "objective: check the email from your boss"
+
+[node name="AreaBlocker4" parent="." instance=ExtResource("11_rkssr")]
+position = Vector2(753, 269)
+rotation = -1.56713
+scale = Vector2(12.2686, 5.39996)
+
+[node name="AreaBlocker5" parent="." instance=ExtResource("11_rkssr")]
+position = Vector2(81, 277)
+rotation = -1.56713
+scale = Vector2(13.4613, 5.4725)
+
+[node name="AreaExit" type="Area2D" parent="."]
+position = Vector2(431, 242)
+scale = Vector2(20.4448, 0.481207)
+script = ExtResource("13_r53hl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExit"]
+position = Vector2(-0.5, 5)
+shape = SubResource("RectangleShape2D_gtoj4")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="AreaExit"]
+offset_left = 6.26076
+offset_top = -68.5775
+offset_right = 128.261
+offset_bottom = -1.57751
+scale = Vector2(0.116, 4.144)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("10_dx140")
+text = "'E' - click"
+
+[node name="AreaBlocker" parent="." instance=ExtResource("11_rkssr")]
+position = Vector2(333, 79)
+scale = Vector2(25.0162, 8.93691)
+
+[node name="AreaBlocker2" parent="." instance=ExtResource("11_rkssr")]
+position = Vector2(327, 457)
+scale = Vector2(25.0162, 8.93691)
+
+[connection signal="body_entered" from="AreaExit" to="AreaExit" method="_on_body_entered"]
+[connection signal="body_exited" from="AreaExit" to="AreaExit" method="_on_body_exited"]

@@ -1,0 +1,389 @@
+[gd_scene load_steps=32 format=3 uid="uid://cbn5m8l5kf2o0"]
+
+[ext_resource type="Script" path="res://Scripts/FSM/FiniteStateMachine.gd" id="1_250el"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerIdleState.gd" id="2_lq5ro"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerAttackState.gd" id="3_b1bjh"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerWalkState.gd" id="4_y1mgh"]
+[ext_resource type="Script" path="res://Scripts/QuestGeneral/QuestTracker.gd" id="5_qdvyi"]
+[ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="6_cgohk"]
+[ext_resource type="LabelSettings" uid="uid://1cnb4418rr7" path="res://Art/Fonts/pixelized_label_large.tres" id="7_ndf8m"]
+[ext_resource type="Texture2D" uid="uid://cdpvk8hmf1tnn" path="res://Scenes/Player/Sprite/goober.png" id="8_youvo"]
+[ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="9_w8pbm"]
+[ext_resource type="PackedScene" uid="uid://ckp2r52hlcfxn" path="res://Scenes/NPC's/Npc_OfficeWorker/npc_officeworker_scene.tscn" id="10_21idk"]
+[ext_resource type="PackedScene" uid="uid://df62hc1ij2fja" path="res://Scenes/NPC's/Npc_Boss/npc_boss_scene.tscn" id="11_jk14w"]
+[ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="13_0o40h"]
+[ext_resource type="Script" path="res://Scenes/Levels/area_exitofficeC.gd" id="13_75yct"]
+[ext_resource type="Texture2D" uid="uid://nl4o654ml1qn" path="res://Art/Sprites/office.png" id="14_qrnyn"]
+[ext_resource type="Script" path="res://Scenes/Levels/dialoguemainc.gd" id="15_yqlmb"]
+[ext_resource type="Texture2D" uid="uid://bnbrlie6flg0g" path="res://Art/Sprites/dialoguebox.png" id="16_rkpys"]
+[ext_resource type="AudioStream" uid="uid://btb8ci71s8661" path="res://Art/Audio/bosslong3.mp3" id="17_3bof0"]
+[ext_resource type="AudioStream" uid="uid://cy0ldtexs8ifu" path="res://Art/Audio/My_Song_2-_1_.ogg" id="18_w5hy0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnucc"]
+size = Vector2(22.5386, 25.33)
+
+[sub_resource type="GDScript" id="GDScript_5xsr5"]
+script/source = "extends Node
+
+@export var anim : String
+@export var damage : int
+"
+
+[sub_resource type="Curve" id="Curve_h7vsg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.71062, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_j105i"]
+curve = SubResource("Curve_h7vsg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wrxbo"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 8.0
+angle_min = -90.0
+angle_max = 90.0
+direction = Vector3(0, -1, 0)
+spread = 90.0
+initial_velocity_min = 10.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 80, 0)
+scale_max = 4.0
+color = Color(0.992157, 0, 0, 1)
+alpha_curve = SubResource("CurveTexture_j105i")
+
+[sub_resource type="Animation" id="Animation_jtcnw"]
+resource_name = "Attack"
+length = 0.8
+
+[sub_resource type="Animation" id="Animation_a1dma"]
+resource_name = "Dash"
+length = 0.4
+
+[sub_resource type="Animation" id="Animation_fkgk5"]
+resource_name = "Death"
+length = 0.4
+
+[sub_resource type="Animation" id="Animation_1i780"]
+resource_name = "Idle"
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_7c1ec"]
+resource_name = "MoonKick"
+length = 0.4
+step = 0.05
+
+[sub_resource type="Animation" id="Animation_wo7cn"]
+resource_name = "Walk"
+length = 0.4
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gtuut"]
+_data = {
+"Attack": SubResource("Animation_jtcnw"),
+"Dash": SubResource("Animation_a1dma"),
+"Death": SubResource("Animation_fkgk5"),
+"Idle": SubResource("Animation_1i780"),
+"MoonKick": SubResource("Animation_7c1ec"),
+"Walk": SubResource("Animation_wo7cn")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtoj4"]
+size = Vector2(24.6572, 30.9676)
+
+[node name="Boss\'sRoom" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
+top_level = true
+texture_filter = 1
+position = Vector2(121, 497)
+floor_stop_on_slope = false
+floor_block_on_wall = false
+
+[node name="BodyCollisionShape" type="CollisionShape2D" parent="Player"]
+position = Vector2(7.10543e-15, 5)
+scale = Vector2(1.35581, 1.17417)
+shape = SubResource("RectangleShape2D_cnucc")
+
+[node name="FSM" type="Node" parent="Player" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_250el")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
+script = ExtResource("2_lq5ro")
+animator = NodePath("../../AnimationPlayer")
+
+[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator", "attacks")]
+script = ExtResource("3_b1bjh")
+animator = NodePath("../../AnimationPlayer")
+attacks = [null, null]
+
+[node name="PunchAttack" type="Node" parent="Player/FSM/Attacking"]
+script = SubResource("GDScript_5xsr5")
+anim = "Attack"
+damage = 55
+
+[node name="KickAttack" type="Node" parent="Player/FSM/Attacking"]
+script = SubResource("GDScript_5xsr5")
+anim = "MoonKick"
+damage = 25
+
+[node name="Moving" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
+script = ExtResource("4_y1mgh")
+movespeed = 140
+animator = NodePath("../../AnimationPlayer")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(1, -86)
+scale = Vector2(2, 2)
+position_smoothing_speed = 15.0
+
+[node name="hit_particle_blood" type="GPUParticles2D" parent="Player"]
+emitting = false
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_wrxbo")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_gtuut")
+}
+
+[node name="QuestTracker" type="Node2D" parent="Player" node_paths=PackedStringArray("quest_info", "quest_announcement")]
+script = ExtResource("5_qdvyi")
+quest_info = NodePath("QuestText")
+quest_announcement = NodePath("QuestAnnounceText")
+
+[node name="QuestText" type="Label" parent="Player/QuestTracker"]
+offset_left = -303.0
+offset_top = -166.0
+offset_right = -151.0
+offset_bottom = -137.0
+label_settings = ExtResource("6_cgohk")
+
+[node name="QuestAnnounceText" type="Label" parent="Player/QuestTracker"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_top = -98.0
+offset_right = 64.0
+offset_bottom = -72.0
+grow_horizontal = 2
+text = "announcement"
+label_settings = ExtResource("7_ndf8m")
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(-1, 6)
+scale = Vector2(0.0291772, 0.031195)
+texture = ExtResource("8_youvo")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Player"]
+offset_left = -373.0
+offset_top = -319.0
+offset_right = 39.0003
+offset_bottom = -264.0
+scale = Vector2(2.55285, 2.98239)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("13_0o40h")
+text = "2pm
+task 3 - complete mandatory NDA training"
+
+[node name="AreaBlocker" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(92, 5.99995)
+scale = Vector2(30.6463, 9.04439)
+
+[node name="AreaBlocker5" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(26, 167)
+scale = Vector2(14.7387, 6.78404)
+
+[node name="AreaBlocker6" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(25, 83)
+scale = Vector2(14.7387, 6.78404)
+
+[node name="AreaBlocker2" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(-164, 340)
+rotation = -1.56713
+scale = Vector2(25.3135, 11.6548)
+
+[node name="AreaBlocker7" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(-115, 142)
+rotation = -1.56713
+scale = Vector2(6.23986, 3.52693)
+
+[node name="AreaBlocker8" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(280, 142)
+rotation = -1.56713
+scale = Vector2(6.21491, 4.67475)
+
+[node name="AreaBlocker13" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(184, 141)
+rotation = -1.56713
+scale = Vector2(6.14009, 5.1848)
+
+[node name="AreaBlocker14" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(86, 140)
+rotation = -1.56713
+scale = Vector2(6.14009, 5.1848)
+
+[node name="AreaBlocker15" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(-10, 141)
+rotation = -1.56713
+scale = Vector2(6.14009, 5.1848)
+
+[node name="AreaBlocker9" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(227, 446)
+scale = Vector2(13.9602, 6.73741)
+
+[node name="AreaBlocker10" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(226, 362)
+scale = Vector2(14.0814, 6.78404)
+
+[node name="AreaBlocker11" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(86, 421)
+rotation = -1.56713
+scale = Vector2(6.23986, 3.52693)
+
+[node name="AreaBlocker12" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(481, 421)
+rotation = -1.56713
+scale = Vector2(6.21491, 4.67475)
+
+[node name="AreaBlocker16" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(385, 420)
+rotation = -1.56713
+scale = Vector2(6.14009, 5.1848)
+
+[node name="AreaBlocker17" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(287, 419)
+rotation = -1.56713
+scale = Vector2(6.14009, 5.1848)
+
+[node name="AreaBlocker18" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(191, 420)
+rotation = -1.56713
+scale = Vector2(6.14009, 5.1848)
+
+[node name="AreaBlocker3" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(104, 608)
+scale = Vector2(27.8558, 5.86846)
+
+[node name="AreaBlocker4" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(576, 348)
+rotation = -1.56713
+scale = Vector2(21.4625, 6.90076)
+
+[node name="coworker" parent="." instance=ExtResource("10_21idk")]
+position = Vector2(-82, 33)
+
+[node name="coworker2" parent="." instance=ExtResource("10_21idk")]
+position = Vector2(319, 471)
+
+[node name="coworker3" parent="." instance=ExtResource("10_21idk")]
+position = Vector2(225, 322)
+
+[node name="coworker4" parent="." instance=ExtResource("10_21idk")]
+position = Vector2(-120, 347)
+
+[node name="Node" type="Node" parent="."]
+
+[node name="AreaExit" type="Area2D" parent="."]
+position = Vector2(119, 446)
+scale = Vector2(3.58555, 1.85362)
+script = ExtResource("13_75yct")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExit"]
+position = Vector2(0.221764, 0.16127)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_gtoj4")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="AreaExit"]
+offset_left = -15.8971
+offset_top = -38.3034
+offset_right = 106.103
+offset_bottom = 28.6966
+scale = Vector2(0.506, 0.929)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("13_0o40h")
+text = "'E' - watch video"
+
+[node name="Office" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(31, -25)
+scale = Vector2(1.871, 1.871)
+texture = ExtResource("14_qrnyn")
+
+[node name="boss" parent="." instance=ExtResource("11_jk14w")]
+position = Vector2(19, 453)
+
+[node name="Dialogue" type="Control" parent="boss"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -204.0
+offset_top = 14.0
+offset_right = -204.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.790014, 0.790014)
+script = ExtResource("15_yqlmb")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="boss/Dialogue"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 10.0
+offset_right = 81.0
+offset_bottom = 53.0
+scale = Vector2(6.01128, 2.98322)
+texture = ExtResource("16_rkpys")
+
+[node name="name" type="RichTextLabel" parent="boss/Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 2.01296
+offset_top = 5.98267
+offset_right = 134.013
+offset_bottom = 28.9827
+scale = Vector2(0.129896, 0.28886)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "name"
+
+[node name="text" type="RichTextLabel" parent="boss/Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 10.0
+offset_right = 305.0
+offset_bottom = 77.0
+scale = Vector2(0.134046, 0.292853)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "example text"
+
+[node name="text" type="RichTextLabel" parent="boss/Dialogue/NinePatchRect/text"]
+layout_mode = 0
+offset_left = 235.729
+offset_top = 50.0326
+offset_right = 507.729
+offset_bottom = 117.033
+scale = Vector2(0.612935, 0.675726)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "press 'enter'"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_3bof0")
+volume_db = -1.0
+autoplay = true
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_w5hy0")
+volume_db = -1.0
+autoplay = true
+
+[connection signal="body_entered" from="AreaExit" to="AreaExit" method="_on_body_entered"]
+[connection signal="body_exited" from="AreaExit" to="AreaExit" method="_on_body_exited"]

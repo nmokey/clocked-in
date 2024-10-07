@@ -1,0 +1,207 @@
+[gd_scene load_steps=25 format=3 uid="uid://b6atg7py1lwku"]
+
+[ext_resource type="Script" path="res://Scripts/FSM/FiniteStateMachine.gd" id="1_hlqhq"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerIdleState.gd" id="2_qexho"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerAttackState.gd" id="3_gp2rk"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerWalkState.gd" id="4_jm4cm"]
+[ext_resource type="Script" path="res://Scenes/Levels/animation_player.gd" id="5_ntvva"]
+[ext_resource type="Texture2D" uid="uid://dfvrbdvys27ey" path="res://Art/Sprites/cursorsprite.svg" id="6_adcv2"]
+[ext_resource type="Texture2D" uid="uid://54dhk7fdesfe" path="res://Scenes/Levels/spreadsheet.png" id="7_ygyn2"]
+[ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="8_ljn2e"]
+[ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="9_77ded"]
+[ext_resource type="Script" path="res://Scenes/Levels/area_exitspreadsheetB.gd" id="10_orpke"]
+[ext_resource type="Texture2D" uid="uid://cjtma4by3q0rc" path="res://Art/Sprites/crunchdialgoue.png" id="11_laqes"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnucc"]
+size = Vector2(22.5386, 25.33)
+
+[sub_resource type="GDScript" id="GDScript_5xsr5"]
+script/source = "extends Node
+
+@export var anim : String
+@export var damage : int
+"
+
+[sub_resource type="Curve" id="Curve_h7vsg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.71062, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_j105i"]
+curve = SubResource("Curve_h7vsg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wrxbo"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 8.0
+angle_min = -90.0
+angle_max = 90.0
+direction = Vector3(0, -1, 0)
+spread = 90.0
+initial_velocity_min = 10.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 80, 0)
+scale_max = 4.0
+color = Color(0.992157, 0, 0, 1)
+alpha_curve = SubResource("CurveTexture_j105i")
+
+[sub_resource type="Animation" id="Animation_jtcnw"]
+resource_name = "Attack"
+length = 0.8
+
+[sub_resource type="Animation" id="Animation_a1dma"]
+resource_name = "Dash"
+length = 0.4
+
+[sub_resource type="Animation" id="Animation_fkgk5"]
+resource_name = "Death"
+length = 0.4
+
+[sub_resource type="Animation" id="Animation_1i780"]
+resource_name = "Idle"
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_7c1ec"]
+resource_name = "MoonKick"
+length = 0.4
+step = 0.05
+
+[sub_resource type="Animation" id="Animation_wo7cn"]
+resource_name = "Walk"
+length = 0.4
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gtuut"]
+_data = {
+"Attack": SubResource("Animation_jtcnw"),
+"Dash": SubResource("Animation_a1dma"),
+"Death": SubResource("Animation_fkgk5"),
+"Idle": SubResource("Animation_1i780"),
+"MoonKick": SubResource("Animation_7c1ec"),
+"Walk": SubResource("Animation_wo7cn")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtoj4"]
+size = Vector2(4.9295, 17.7145)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
+top_level = true
+texture_filter = 1
+position = Vector2(681, 412)
+floor_stop_on_slope = false
+floor_block_on_wall = false
+
+[node name="BodyCollisionShape" type="CollisionShape2D" parent="Player"]
+position = Vector2(-3, 3)
+scale = Vector2(0.554514, 0.571019)
+shape = SubResource("RectangleShape2D_cnucc")
+
+[node name="FSM" type="Node" parent="Player" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_hlqhq")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
+script = ExtResource("2_qexho")
+animator = NodePath("../../AnimationPlayer")
+
+[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator", "attacks")]
+script = ExtResource("3_gp2rk")
+animator = NodePath("../../AnimationPlayer")
+attacks = [null, null]
+
+[node name="PunchAttack" type="Node" parent="Player/FSM/Attacking"]
+script = SubResource("GDScript_5xsr5")
+anim = "Attack"
+damage = 55
+
+[node name="KickAttack" type="Node" parent="Player/FSM/Attacking"]
+script = SubResource("GDScript_5xsr5")
+anim = "MoonKick"
+damage = 25
+
+[node name="Moving" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
+script = ExtResource("4_jm4cm")
+movespeed = 140
+animator = NodePath("../../AnimationPlayer")
+
+[node name="hit_particle_blood" type="GPUParticles2D" parent="Player"]
+emitting = false
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_wrxbo")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_gtuut")
+}
+script = ExtResource("5_ntvva")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(-1, 6)
+scale = Vector2(0.019, 0.019)
+texture = ExtResource("6_adcv2")
+
+[node name="Email" type="Sprite2D" parent="."]
+position = Vector2(375, 244)
+scale = Vector2(0.59705, 0.59705)
+texture = ExtResource("7_ygyn2")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Email"]
+offset_left = -510.845
+offset_top = -370.153
+offset_right = -98.8447
+offset_bottom = -315.153
+scale = Vector2(2.55285, 2.98239)
+theme_override_fonts/normal_font = ExtResource("8_ljn2e")
+text = "yeah crunch those numbers"
+
+[node name="AreaBlocker4" parent="Email" instance=ExtResource("9_77ded")]
+position = Vector2(611.339, 41.8725)
+rotation = -1.56713
+scale = Vector2(23.7728, 4.82341)
+
+[node name="AreaBlocker5" parent="Email" instance=ExtResource("9_77ded")]
+position = Vector2(-502.47, 28.4733)
+rotation = -1.56713
+scale = Vector2(23.0922, 5.73081)
+
+[node name="AreaBlocker" parent="Email" instance=ExtResource("9_77ded")]
+position = Vector2(-97.1443, -291.433)
+scale = Vector2(44.4203, 9.08854)
+
+[node name="AreaBlocker2" parent="Email" instance=ExtResource("9_77ded")]
+position = Vector2(-50.247, 326.606)
+scale = Vector2(43.1997, 8.99165)
+
+[node name="AreaExit" type="Area2D" parent="."]
+z_index = 5
+position = Vector2(665, 60)
+scale = Vector2(4.97009, 0.790314)
+script = ExtResource("10_orpke")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExit"]
+position = Vector2(-17.7059, 96.1643)
+scale = Vector2(0.721162, 0.808066)
+shape = SubResource("RectangleShape2D_gtoj4")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="AreaExit"]
+offset_left = -24.748
+offset_top = 45.5515
+offset_right = 97.2516
+offset_bottom = 112.552
+scale = Vector2(0.376399, 2.888)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("8_ljn2e")
+text = "'E' - click"
+
+[node name="Crunchdialgoue" type="Sprite2D" parent="."]
+position = Vector2(384, 244)
+scale = Vector2(0.20985, 0.20985)
+texture = ExtResource("11_laqes")
+
+[connection signal="body_entered" from="AreaExit" to="AreaExit" method="_on_body_entered"]
+[connection signal="body_exited" from="AreaExit" to="AreaExit" method="_on_body_exited"]

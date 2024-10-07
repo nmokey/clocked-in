@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://bc76un1kbbdrx"]
+
+[ext_resource type="Script" path="res://Scripts/Reset.gd" id="1_chqon"]
+[ext_resource type="LabelSettings" uid="uid://1cnb4418rr7" path="res://Art/Fonts/pixelized_label_large.tres" id="2_m5kvw"]
+[ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="3_wbp30"]
+[ext_resource type="Texture2D" uid="uid://c75fanx85g4rl" path="res://Art/Sprites/logo.png" id="4_h3y2x"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchor_right = 0.839
+anchor_bottom = 1.393
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 130.8
+offset_bottom = -194.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.05589, 1.07323)
+script = ExtResource("1_chqon")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.21
+offset_top = -59.9188
+offset_right = 38.7903
+offset_bottom = -3.91878
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.44903, 1.44903)
+text = "UCLA Ludum Dare 56"
+label_settings = ExtResource("2_m5kvw")
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -229.081
+offset_top = -258.671
+offset_right = -28.0809
+offset_bottom = -133.671
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.93091, 1.87145)
+text = "Controls:
+'E' to play
+`WASD` to move
+'Enter' for dialogue
+Created by Pussy"
+label_settings = ExtResource("3_wbp30")
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(363, 116)
+scale = Vector2(0.743421, 0.743421)
+texture = ExtResource("4_h3y2x")

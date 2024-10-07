@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://ckp2r52hlcfxn"]
+
+[ext_resource type="Script" path="res://Scenes/NPC's/Npc_OfficeWorker/coworkerDialogue.gd" id="3_xaw3v"]
+[ext_resource type="Texture2D" uid="uid://b2rnbxaknvc20" path="res://Scenes/NPC's/Npc_OfficeWorker/coworker.png" id="5_po6a8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t56sl"]
+radius = 91.022
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l6yr8"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g5c2q"]
+
+[node name="NPC" type="Area2D"]
+script = ExtResource("3_xaw3v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.486764, 0.486764)
+shape = SubResource("CircleShape2D_t56sl")
+
+[node name="NPC" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_l6yr8")
+autoplay = "default"
+frame_progress = 0.902569
+
+[node name="StaticBody2D" type="StaticBody2D" parent="NPC"]
+scale = Vector2(1.12157, 1.06743)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC/StaticBody2D"]
+position = Vector2(1, 5)
+scale = Vector2(1.26279, 1.43775)
+shape = SubResource("RectangleShape2D_g5c2q")
+
+[node name="Sprite2D" type="Sprite2D" parent="NPC"]
+position = Vector2(2, 5)
+scale = Vector2(0.0320732, 0.0313383)
+texture = ExtResource("5_po6a8")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

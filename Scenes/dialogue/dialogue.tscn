@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://6nvlmhrhv8i4"]
+
+[ext_resource type="Script" path="res://Scenes/dialogue/dialogueplayer.gd" id="1_dh2iv"]
+[ext_resource type="Texture2D" uid="uid://bnbrlie6flg0g" path="res://Art/Sprites/dialoguebox.png" id="2_ge1x7"]
+
+[node name="Dialogue" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dh2iv")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 10.0
+offset_right = 81.0
+offset_bottom = 53.0
+scale = Vector2(6.01128, 2.74721)
+texture = ExtResource("2_ge1x7")
+
+[node name="name" type="RichTextLabel" parent="NinePatchRect"]
+layout_mode = 0
+offset_left = 1.99625
+offset_top = 5.82409
+offset_right = 133.996
+offset_bottom = 28.8241
+scale = Vector2(0.129526, 0.281777)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "name"
+
+[node name="text" type="RichTextLabel" parent="NinePatchRect"]
+layout_mode = 0
+offset_left = 1.99625
+offset_top = 10.1922
+offset_right = 273.996
+offset_bottom = 77.1922
+scale = Vector2(0.15, 0.364)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "example text"
+
+[node name="text" type="RichTextLabel" parent="NinePatchRect/text"]
+offset_left = 229.568
+offset_top = 45.0007
+offset_right = 501.568
+offset_bottom = 112.001
+scale = Vector2(0.435263, 0.391006)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "press 'enter'"

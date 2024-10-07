@@ -1,0 +1,155 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqdlyt4p7n31p"]
+
+[ext_resource type="Script" path="res://Scripts/Reset.gd" id="1_k1rr8"]
+[ext_resource type="LabelSettings" uid="uid://1cnb4418rr7" path="res://Art/Fonts/pixelized_label_large.tres" id="2_y2nq2"]
+[ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="3_lkj7a"]
+[ext_resource type="Texture2D" uid="uid://c75fanx85g4rl" path="res://Art/Sprites/logo.png" id="4_3o4yu"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k1rr8")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -317.0
+offset_top = -411.0
+offset_right = 318.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "CREDITS
+Project Lead - Ryan Zheng
+Programmers - Ryan Zheng, Isaac Lee, Abhiram Voleti
+Art - Erin Lee, Kavish Pattani, Nu Tran 
+Audio - Aarav Kakad, Chelsea Zhou
+Writer - Maggie Kwan
+
+"
+label_settings = ExtResource("2_y2nq2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="Label"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.5
+offset_top = 306.5
+offset_right = 862.5
+offset_bottom = 825.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.736962, 0.714935)
+text = "Clocked In was conceptualized, written, drawn, and developed in 72 hours 
+by UCLA first years for Ludum Dare 56. None of us had any game 
+development experience (clearly).
+Also, this game is not intended to disparage Lockheed Martin (please recruit me)"
+label_settings = ExtResource("2_y2nq2")
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -152.0
+offset_top = -172.0
+offset_right = 483.0
+offset_bottom = 347.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.785773, 0.820783)
+text = "Maya - Kavish Pattani
+Eleanor - Ryan Zheng
+Ryan Zheng - William Diao
+Charon - Kavish Pattani
+Aaron - Isaac Lee
+Non-Denominational God - Ryan Reynolds
+The Ghost of Dick Cheney - Aarav Kakad
+"
+label_settings = ExtResource("2_y2nq2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label5" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -340.0
+offset_right = 275.0
+offset_bottom = 179.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.12205, 1.08091)
+text = "VOICES"
+label_settings = ExtResource("2_y2nq2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -372.0
+offset_top = -154.0
+offset_right = 263.0
+offset_bottom = 365.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.786048, 0.790977)
+text = "Little Guy - Ryan Zheng
+Boss - Aarav Kakad
+Coworker - Nu Tran
+Training Video Person - Isaac Lee
+Dave - Chelsea Zhou
+Gilbert - Erin Lee
+Sheryl - Abhiram Voleti
+Ruth - Maggie Kwan
+"
+label_settings = ExtResource("2_y2nq2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 313.0
+offset_top = -486.0
+offset_right = 514.0
+offset_bottom = -361.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.20159, 1.22405)
+text = "'escape' - quit
+'E' - play again"
+label_settings = ExtResource("3_lkj7a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(140, 456)
+scale = Vector2(0.431099, 0.431099)
+texture = ExtResource("4_3o4yu")

@@ -1,0 +1,192 @@
+[gd_scene load_steps=13 format=3 uid="uid://cwfq22laxr7v5"]
+
+[ext_resource type="PackedScene" uid="uid://bvg5dny32iw0x" path="res://Scenes/Player/Player.tscn" id="1_wagdm"]
+[ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="2_02cdt"]
+[ext_resource type="Script" path="res://Scripts/AreaExit.gd" id="3_cgxb0"]
+[ext_resource type="PackedScene" uid="uid://bt5yicfpmnlwk" path="res://Scenes/Levels/Basement01.tscn" id="4_u7k0i"]
+[ext_resource type="PackedScene" uid="uid://ckp2r52hlcfxn" path="res://Scenes/NPC's/Npc_OfficeWorker/npc_officeworker_scene.tscn" id="5_erjf2"]
+[ext_resource type="Texture2D" uid="uid://bxw780we2tm23" path="res://Art/Sprites/breakroom.png" id="6_hsncp"]
+[ext_resource type="Script" path="res://Scenes/Levels/dialogue5.gd" id="7_5pf2m"]
+[ext_resource type="Texture2D" uid="uid://b7yokmfihf45m" path="res://Scenes/dialogue/textbox.png" id="8_px85b"]
+[ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="9_kjye4"]
+[ext_resource type="AudioStream" uid="uid://cpgqxmibh7ule" path="res://Art/Audio/11amconvo.wav" id="10_hgjxi"]
+[ext_resource type="AudioStream" uid="uid://cy0ldtexs8ifu" path="res://Art/Audio/My_Song_2-_1_.ogg" id="11_488kx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtoj4"]
+size = Vector2(25.4701, 24.0411)
+
+[node name="Boss\'sRoom" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("1_wagdm")]
+position = Vector2(292, 251)
+script = null
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Player"]
+offset_left = -383.0
+offset_top = -244.0
+offset_right = 29.0003
+offset_bottom = -189.0
+scale = Vector2(2.55285, 2.98239)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("9_kjye4")
+text = "11am
+task 1 - check in on the team"
+
+[node name="AreaBlocker" parent="." instance=ExtResource("2_02cdt")]
+position = Vector2(74, 219)
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker6" parent="." instance=ExtResource("2_02cdt")]
+position = Vector2(-421, 303)
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker2" parent="." instance=ExtResource("2_02cdt")]
+position = Vector2(-44, 606)
+rotation = -1.56713
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker7" parent="." instance=ExtResource("2_02cdt")]
+position = Vector2(280, 275)
+rotation = -1.56713
+scale = Vector2(2.83421, 4.25023)
+
+[node name="AreaBlocker8" parent="." instance=ExtResource("2_02cdt")]
+position = Vector2(170, 273)
+rotation = -1.56713
+scale = Vector2(2.5519, 3.68951)
+
+[node name="AreaBlocker5" parent="." instance=ExtResource("2_02cdt")]
+position = Vector2(-120, 53)
+rotation = -1.56713
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker3" parent="." instance=ExtResource("2_02cdt")]
+position = Vector2(87, 408)
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker9" parent="." instance=ExtResource("2_02cdt")]
+position = Vector2(197, 279)
+scale = Vector2(3.91519, 2.64255)
+
+[node name="AreaBlocker10" parent="." instance=ExtResource("2_02cdt")]
+position = Vector2(198, 243)
+scale = Vector2(3.91519, 2.64255)
+
+[node name="AreaBlocker4" parent="." instance=ExtResource("2_02cdt")]
+position = Vector2(420, 414)
+rotation = -1.56713
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaExit" type="Area2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-112, 207)
+scale = Vector2(15.4125, 3.30232)
+script = ExtResource("3_cgxb0")
+next_scene = ExtResource("4_u7k0i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExit"]
+position = Vector2(-0.5, 5)
+scale = Vector2(0.0929647, 0.82193)
+shape = SubResource("RectangleShape2D_gtoj4")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="AreaExit"]
+offset_left = -6.16381
+offset_top = 9.38734
+offset_right = 115.836
+offset_bottom = 76.3873
+scale = Vector2(0.118028, 0.634758)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("9_kjye4")
+text = "'E' - escape the stifling monotony of your coworker's
+milquetoast monologue"
+
+[node name="coworker" parent="." instance=ExtResource("5_erjf2")]
+position = Vector2(-65, 206)
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Breakroom" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(114, 234)
+scale = Vector2(0.371524, 0.389807)
+texture = ExtResource("6_hsncp")
+
+[node name="Dialogue" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -286.0
+offset_top = 109.0
+offset_right = -286.0
+offset_bottom = 109.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.707964, 0.655131)
+script = ExtResource("7_5pf2m")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Dialogue"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 10.0
+offset_right = 81.0
+offset_bottom = 53.0
+scale = Vector2(6.01128, 2.74721)
+texture = ExtResource("8_px85b")
+
+[node name="name" type="RichTextLabel" parent="Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 134.0
+offset_bottom = 26.0
+scale = Vector2(0.16, 0.291)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "name"
+
+[node name="text" type="RichTextLabel" parent="Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 8.0
+offset_right = 274.0
+offset_bottom = 75.0
+scale = Vector2(0.15, 0.364)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "example text"
+
+[node name="text2" type="RichTextLabel" parent="Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 31.0897
+offset_top = 23.9744
+offset_right = 303.09
+offset_bottom = 90.9744
+scale = Vector2(0.113091, 0.367856)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "press 'enter'"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -68.0
+offset_top = 133.0
+offset_right = 54.0
+offset_bottom = 200.0
+scale = Vector2(1.49105, 1.77214)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("9_kjye4")
+text = "main office"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_hgjxi")
+volume_db = -3.0
+autoplay = true
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_488kx")
+volume_db = -1.0
+autoplay = true
+
+[connection signal="body_entered" from="AreaExit" to="AreaExit" method="_on_body_entered"]
+[connection signal="body_exited" from="AreaExit" to="AreaExit" method="_on_body_exited"]

@@ -1,0 +1,186 @@
+[gd_scene load_steps=14 format=3 uid="uid://dsuhr7pfptgpj"]
+
+[ext_resource type="PackedScene" uid="uid://bvg5dny32iw0x" path="res://Scenes/Player/Player.tscn" id="1_13smj"]
+[ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="2_dv77l"]
+[ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="3_pc034"]
+[ext_resource type="Script" path="res://Scenes/Levels/area_exitend.gd" id="4_bvaea"]
+[ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="5_0aw3p"]
+[ext_resource type="PackedScene" uid="uid://df62hc1ij2fja" path="res://Scenes/NPC's/Npc_Boss/npc_boss_scene.tscn" id="6_t0o3e"]
+[ext_resource type="Script" path="res://Scenes/NPC's/Npc_Boss/bossDialogue.gd" id="7_gubhl"]
+[ext_resource type="Texture2D" uid="uid://43mwp7wsduta" path="res://Art/Sprites/bossofficee.png" id="8_ou02i"]
+[ext_resource type="Script" path="res://Scripts/QuestGeneral/Quest.gd" id="9_0v2ag"]
+[ext_resource type="Script" path="res://Scenes/Levels/dialogueboss2.gd" id="10_1e8if"]
+[ext_resource type="Texture2D" uid="uid://b7yokmfihf45m" path="res://Scenes/dialogue/textbox.png" id="11_b1652"]
+[ext_resource type="AudioStream" uid="uid://r8i3r3wv1qeh" path="res://Art/Audio/Effects/bossupset.mp3" id="12_lxgnc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtoj4"]
+size = Vector2(4.9295, 17.7145)
+
+[node name="BossOffice" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("1_13smj")]
+position = Vector2(209, 249)
+script = null
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Player"]
+offset_left = -377.0
+offset_top = -240.0
+offset_right = 35.0003
+offset_bottom = -185.0
+scale = Vector2(2.55285, 2.98239)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_dv77l")
+text = "5pm
+final task - get outta here"
+
+[node name="AreaBlocker" parent="." instance=ExtResource("3_pc034")]
+position = Vector2(364, 167)
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker2" parent="." instance=ExtResource("3_pc034")]
+position = Vector2(74, 395)
+rotation = -1.56713
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker3" parent="." instance=ExtResource("3_pc034")]
+position = Vector2(153, 427)
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker11" parent="." instance=ExtResource("3_pc034")]
+position = Vector2(171, 142)
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker6" parent="." instance=ExtResource("3_pc034")]
+position = Vector2(261, 343)
+scale = Vector2(1.86159, 3.18722)
+
+[node name="AreaBlocker8" parent="." instance=ExtResource("3_pc034")]
+position = Vector2(262, 224)
+scale = Vector2(1.86159, 3.18722)
+
+[node name="AreaBlocker5" parent="." instance=ExtResource("3_pc034")]
+position = Vector2(-258, 168)
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker4" parent="." instance=ExtResource("3_pc034")]
+position = Vector2(424, 284)
+rotation = -1.56713
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker7" parent="." instance=ExtResource("3_pc034")]
+position = Vector2(3024.53, -8419.17)
+rotation = -3.1296
+scale = Vector2(185.856, 185.849)
+skew = -0.00671601
+
+[node name="AreaBlocker9" parent="." instance=ExtResource("3_pc034")]
+position = Vector2(257, 281)
+rotation = -1.56713
+scale = Vector2(4.93366, 4.15316)
+
+[node name="AreaBlocker10" parent="." instance=ExtResource("3_pc034")]
+position = Vector2(307, 280)
+rotation = -1.56713
+scale = Vector2(4.93366, 4.15316)
+
+[node name="AreaExit" type="Area2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(112, 107)
+scale = Vector2(2.14892, 2.04107)
+script = ExtResource("4_bvaea")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExit"]
+position = Vector2(-0.5, 5)
+shape = SubResource("RectangleShape2D_gtoj4")
+
+[node name="Label" type="Label" parent="AreaExit"]
+offset_left = -16.0
+offset_top = -25.0
+offset_right = 96.0
+offset_bottom = 1.0
+text = "'E' - exit"
+label_settings = ExtResource("5_0aw3p")
+metadata/_edit_use_anchors_ = true
+
+[node name="boss" parent="." instance=ExtResource("6_t0o3e")]
+position = Vector2(308, 247)
+script = ExtResource("7_gubhl")
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Bossofficee" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(165, 315)
+texture = ExtResource("8_ou02i")
+
+[node name="quest" type="Node" parent="."]
+script = ExtResource("9_0v2ag")
+quest_id = 2
+quest_name = "Search the basement"
+quest_objective = Array[String](["Find the end of the basement"])
+quest_reward = 15
+
+[node name="Dialogue" type="Control" parent="."]
+unique_name_in_owner = true
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 130.0
+offset_top = 155.0
+offset_right = 130.0
+offset_bottom = 155.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.615694, 0.615694)
+script = ExtResource("10_1e8if")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Dialogue"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 10.0
+offset_right = 81.0
+offset_bottom = 53.0
+scale = Vector2(6.01128, 2.74721)
+texture = ExtResource("11_b1652")
+
+[node name="name" type="RichTextLabel" parent="Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 134.0
+offset_bottom = 26.0
+scale = Vector2(0.16, 0.291)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "name"
+
+[node name="text" type="RichTextLabel" parent="Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 8.0
+offset_right = 274.0
+offset_bottom = 75.0
+scale = Vector2(0.15, 0.364)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "example text"
+
+[node name="text2" type="RichTextLabel" parent="Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 32.1079
+offset_top = 25.3293
+offset_right = 304.108
+offset_bottom = 92.3293
+scale = Vector2(0.115635, 0.295042)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "press 'enter'"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_lxgnc")
+volume_db = -1.0
+autoplay = true
+
+[connection signal="body_entered" from="AreaExit" to="AreaExit" method="_on_body_entered"]
+[connection signal="body_exited" from="AreaExit" to="AreaExit" method="_on_body_exited"]

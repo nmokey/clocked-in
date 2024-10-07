@@ -1,0 +1,273 @@
+[gd_scene load_steps=27 format=3 uid="uid://b76q7l3tnfxjn"]
+
+[ext_resource type="Script" path="res://Scripts/FSM/FiniteStateMachine.gd" id="1_hd5dd"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerIdleState.gd" id="2_wosmp"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerAttackState.gd" id="3_gu13j"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerWalkState.gd" id="4_x6vn8"]
+[ext_resource type="Script" path="res://Scenes/Levels/animation_player.gd" id="5_yti5l"]
+[ext_resource type="Texture2D" uid="uid://dfvrbdvys27ey" path="res://Art/Sprites/cursorsprite.svg" id="6_6bm7g"]
+[ext_resource type="Texture2D" uid="uid://bhprvnsjiqvds" path="res://Art/Sprites/trainingvid.png" id="7_5j6qt"]
+[ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="8_e3gjv"]
+[ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="9_lhhvj"]
+[ext_resource type="Script" path="res://Scenes/Levels/area_exitvideo.gd" id="10_3qyti"]
+[ext_resource type="Script" path="res://Scenes/Levels/dialoguevideo.gd" id="11_vdsd5"]
+[ext_resource type="Texture2D" uid="uid://bnbrlie6flg0g" path="res://Art/Sprites/dialoguebox.png" id="12_djmur"]
+[ext_resource type="AudioStream" uid="uid://c8q5f8vjjyqi7" path="res://Art/Audio/tvpfinal2.mp3" id="13_ycg1p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnucc"]
+size = Vector2(22.5386, 25.33)
+
+[sub_resource type="GDScript" id="GDScript_5xsr5"]
+script/source = "extends Node
+
+@export var anim : String
+@export var damage : int
+"
+
+[sub_resource type="Curve" id="Curve_h7vsg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.71062, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_j105i"]
+curve = SubResource("Curve_h7vsg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wrxbo"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 8.0
+angle_min = -90.0
+angle_max = 90.0
+direction = Vector3(0, -1, 0)
+spread = 90.0
+initial_velocity_min = 10.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 80, 0)
+scale_max = 4.0
+color = Color(0.992157, 0, 0, 1)
+alpha_curve = SubResource("CurveTexture_j105i")
+
+[sub_resource type="Animation" id="Animation_jtcnw"]
+resource_name = "Attack"
+length = 0.8
+
+[sub_resource type="Animation" id="Animation_a1dma"]
+resource_name = "Dash"
+length = 0.4
+
+[sub_resource type="Animation" id="Animation_fkgk5"]
+resource_name = "Death"
+length = 0.4
+
+[sub_resource type="Animation" id="Animation_1i780"]
+resource_name = "Idle"
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_7c1ec"]
+resource_name = "MoonKick"
+length = 0.4
+step = 0.05
+
+[sub_resource type="Animation" id="Animation_wo7cn"]
+resource_name = "Walk"
+length = 0.4
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gtuut"]
+_data = {
+"Attack": SubResource("Animation_jtcnw"),
+"Dash": SubResource("Animation_a1dma"),
+"Death": SubResource("Animation_fkgk5"),
+"Idle": SubResource("Animation_1i780"),
+"MoonKick": SubResource("Animation_7c1ec"),
+"Walk": SubResource("Animation_wo7cn")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtoj4"]
+size = Vector2(120.925, 36.4033)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
+top_level = true
+texture_filter = 1
+position = Vector2(320, 224)
+floor_stop_on_slope = false
+floor_block_on_wall = false
+
+[node name="BodyCollisionShape" type="CollisionShape2D" parent="Player"]
+position = Vector2(-3, 3)
+scale = Vector2(0.554514, 0.571019)
+shape = SubResource("RectangleShape2D_cnucc")
+
+[node name="FSM" type="Node" parent="Player" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_hd5dd")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
+script = ExtResource("2_wosmp")
+animator = NodePath("../../AnimationPlayer")
+
+[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator", "attacks")]
+script = ExtResource("3_gu13j")
+animator = NodePath("../../AnimationPlayer")
+attacks = [null, null]
+
+[node name="PunchAttack" type="Node" parent="Player/FSM/Attacking"]
+script = SubResource("GDScript_5xsr5")
+anim = "Attack"
+damage = 55
+
+[node name="KickAttack" type="Node" parent="Player/FSM/Attacking"]
+script = SubResource("GDScript_5xsr5")
+anim = "MoonKick"
+damage = 25
+
+[node name="Moving" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
+script = ExtResource("4_x6vn8")
+movespeed = 140
+animator = NodePath("../../AnimationPlayer")
+
+[node name="hit_particle_blood" type="GPUParticles2D" parent="Player"]
+emitting = false
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_wrxbo")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_gtuut")
+}
+script = ExtResource("5_yti5l")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(-1, 6)
+scale = Vector2(0.019, 0.019)
+texture = ExtResource("6_6bm7g")
+
+[node name="Email" type="Sprite2D" parent="."]
+position = Vector2(375, 244)
+scale = Vector2(0.59705, 0.59705)
+texture = ExtResource("7_5j6qt")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Email"]
+z_index = 5
+offset_left = -509.17
+offset_top = -311.532
+offset_right = -97.1698
+offset_bottom = -256.532
+scale = Vector2(3.15669, 3.68784)
+theme_override_colors/default_color = Color(1, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("8_e3gjv")
+text = "COMPLETE TRAINING"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Email"]
+offset_left = -510.845
+offset_top = -370.153
+offset_right = -98.8448
+offset_bottom = -315.153
+scale = Vector2(2.55285, 2.98239)
+theme_override_fonts/normal_font = ExtResource("8_e3gjv")
+text = "watch video"
+
+[node name="AreaBlocker4" parent="Email" instance=ExtResource("9_lhhvj")]
+position = Vector2(611.339, 41.8725)
+rotation = -1.56713
+scale = Vector2(23.7728, 4.82341)
+
+[node name="AreaBlocker5" parent="Email" instance=ExtResource("9_lhhvj")]
+position = Vector2(-502.47, 28.4733)
+rotation = -1.56713
+scale = Vector2(23.0922, 5.73081)
+
+[node name="AreaBlocker" parent="Email" instance=ExtResource("9_lhhvj")]
+position = Vector2(-97.1443, -291.433)
+scale = Vector2(44.4203, 9.08854)
+
+[node name="AreaBlocker2" parent="Email" instance=ExtResource("9_lhhvj")]
+position = Vector2(-50.247, 326.606)
+scale = Vector2(43.1997, 8.99165)
+
+[node name="AreaExit" type="Area2D" parent="."]
+z_index = 5
+position = Vector2(91, 72)
+scale = Vector2(4.97009, 0.790314)
+script = ExtResource("10_3qyti")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExit"]
+position = Vector2(9.45657, 2.53064)
+scale = Vector2(0.229614, 0.695168)
+shape = SubResource("RectangleShape2D_gtoj4")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="AreaExit"]
+offset_left = -3.62167
+offset_top = 2.53064
+offset_right = 118.378
+offset_bottom = 69.5306
+scale = Vector2(0.390994, 2.90207)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("8_e3gjv")
+text = "'E' - click"
+
+[node name="Dialogue" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 204.0
+offset_top = 278.0
+offset_right = 204.0
+offset_bottom = 278.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.12136)
+script = ExtResource("11_vdsd5")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Dialogue"]
+layout_mode = 0
+offset_left = -116.0
+offset_top = 20.0
+offset_right = -71.0
+offset_bottom = 63.0
+scale = Vector2(13.6964, 2.75903)
+texture = ExtResource("12_djmur")
+
+[node name="name" type="RichTextLabel" parent="Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 1.60626
+offset_top = 5.79913
+offset_right = 133.606
+offset_bottom = 28.7991
+scale = Vector2(0.0578272, 0.270134)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "name"
+
+[node name="text" type="RichTextLabel" parent="Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 11.0
+offset_right = 656.0
+offset_bottom = 78.0
+scale = Vector2(0.0632975, 0.285803)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "example text"
+
+[node name="text2" type="RichTextLabel" parent="Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 38.5502
+offset_top = 23.4568
+offset_right = 310.55
+offset_bottom = 90.4568
+scale = Vector2(0.0495681, 0.260388)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "press 'enter'"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_ycg1p")
+volume_db = -1.0
+autoplay = true
+
+[connection signal="body_entered" from="AreaExit" to="AreaExit" method="_on_body_entered"]
+[connection signal="body_exited" from="AreaExit" to="AreaExit" method="_on_body_exited"]

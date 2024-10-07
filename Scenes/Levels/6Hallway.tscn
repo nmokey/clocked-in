@@ -1,0 +1,308 @@
+[gd_scene load_steps=29 format=3 uid="uid://cosmv0di4nili"]
+
+[ext_resource type="Texture2D" uid="uid://hqegpc6ti0ek" path="res://Art/Sprites/6hallway.png" id="1_ortks"]
+[ext_resource type="Script" path="res://Scripts/FSM/FiniteStateMachine.gd" id="2_hmlrn"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerIdleState.gd" id="3_y5u7s"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerAttackState.gd" id="4_1vvfc"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerWalkState.gd" id="5_wyege"]
+[ext_resource type="Script" path="res://Scripts/QuestGeneral/QuestTracker.gd" id="6_nl7sp"]
+[ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="7_y8s53"]
+[ext_resource type="LabelSettings" uid="uid://1cnb4418rr7" path="res://Art/Fonts/pixelized_label_large.tres" id="8_m5wgu"]
+[ext_resource type="Texture2D" uid="uid://bsbfnxdujanep" path="res://Art/Sprites/goobersandwich.png" id="9_jmgjy"]
+[ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="10_v8et4"]
+[ext_resource type="Script" path="res://Scenes/dialogue/dialogue6.gd" id="11_g3o6a"]
+[ext_resource type="Texture2D" uid="uid://bnbrlie6flg0g" path="res://Art/Sprites/dialoguebox.png" id="11_xilen"]
+[ext_resource type="Script" path="res://Scenes/Levels/area_exithall.gd" id="13_hii0x"]
+[ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="14_ja4wh"]
+[ext_resource type="AudioStream" uid="uid://b3dbwvyjcjlfr" path="res://Art/Audio/lg1.mp3" id="15_suy2h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnucc"]
+size = Vector2(22.5386, 25.33)
+
+[sub_resource type="GDScript" id="GDScript_5xsr5"]
+script/source = "extends Node
+
+@export var anim : String
+@export var damage : int
+"
+
+[sub_resource type="Curve" id="Curve_h7vsg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.71062, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_j105i"]
+curve = SubResource("Curve_h7vsg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wrxbo"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 8.0
+angle_min = -90.0
+angle_max = 90.0
+direction = Vector3(0, -1, 0)
+spread = 90.0
+initial_velocity_min = 10.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 80, 0)
+scale_max = 4.0
+color = Color(0.992157, 0, 0, 1)
+alpha_curve = SubResource("CurveTexture_j105i")
+
+[sub_resource type="Animation" id="Animation_jtcnw"]
+resource_name = "Attack"
+length = 0.8
+
+[sub_resource type="Animation" id="Animation_a1dma"]
+resource_name = "Dash"
+length = 0.4
+
+[sub_resource type="Animation" id="Animation_fkgk5"]
+resource_name = "Death"
+length = 0.4
+
+[sub_resource type="Animation" id="Animation_1i780"]
+resource_name = "Idle"
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_7c1ec"]
+resource_name = "MoonKick"
+length = 0.4
+step = 0.05
+
+[sub_resource type="Animation" id="Animation_wo7cn"]
+resource_name = "Walk"
+length = 0.4
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gtuut"]
+_data = {
+"Attack": SubResource("Animation_jtcnw"),
+"Dash": SubResource("Animation_a1dma"),
+"Death": SubResource("Animation_fkgk5"),
+"Idle": SubResource("Animation_1i780"),
+"MoonKick": SubResource("Animation_7c1ec"),
+"Walk": SubResource("Animation_wo7cn")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffger"]
+size = Vector2(26.1345, 32.5135)
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(110, 90)
+scale = Vector2(0.622528, 0.622528)
+
+[node name="6Hallway" type="Sprite2D" parent="."]
+position = Vector2(411, 248)
+scale = Vector2(0.575635, 0.575635)
+texture = ExtResource("1_ortks")
+
+[node name="Player" type="CharacterBody2D" parent="6Hallway" groups=["Player"]]
+top_level = true
+texture_filter = 1
+position = Vector2(574, 301)
+scale = Vector2(1.78282, 1.78282)
+floor_stop_on_slope = false
+floor_block_on_wall = false
+
+[node name="BodyCollisionShape" type="CollisionShape2D" parent="6Hallway/Player"]
+position = Vector2(7.10543e-15, 5)
+scale = Vector2(1.35581, 1.17417)
+shape = SubResource("RectangleShape2D_cnucc")
+
+[node name="FSM" type="Node" parent="6Hallway/Player" node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_hmlrn")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="6Hallway/Player/FSM" node_paths=PackedStringArray("animator")]
+script = ExtResource("3_y5u7s")
+animator = NodePath("../../AnimationPlayer")
+
+[node name="Attacking" type="Node" parent="6Hallway/Player/FSM" node_paths=PackedStringArray("animator", "attacks")]
+script = ExtResource("4_1vvfc")
+animator = NodePath("../../AnimationPlayer")
+attacks = [null, null]
+
+[node name="PunchAttack" type="Node" parent="6Hallway/Player/FSM/Attacking"]
+script = SubResource("GDScript_5xsr5")
+anim = "Attack"
+damage = 55
+
+[node name="KickAttack" type="Node" parent="6Hallway/Player/FSM/Attacking"]
+script = SubResource("GDScript_5xsr5")
+anim = "MoonKick"
+damage = 25
+
+[node name="Moving" type="Node" parent="6Hallway/Player/FSM" node_paths=PackedStringArray("animator")]
+script = ExtResource("5_wyege")
+movespeed = 140
+animator = NodePath("../../AnimationPlayer")
+
+[node name="Camera2D" type="Camera2D" parent="6Hallway/Player"]
+position = Vector2(0, -27.6303)
+scale = Vector2(2, 2)
+position_smoothing_speed = 15.0
+
+[node name="hit_particle_blood" type="GPUParticles2D" parent="6Hallway/Player"]
+emitting = false
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_wrxbo")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="6Hallway/Player"]
+libraries = {
+"": SubResource("AnimationLibrary_gtuut")
+}
+
+[node name="QuestTracker" type="Node2D" parent="6Hallway/Player" node_paths=PackedStringArray("quest_info", "quest_announcement")]
+script = ExtResource("6_nl7sp")
+quest_info = NodePath("QuestText")
+quest_announcement = NodePath("QuestAnnounceText")
+
+[node name="QuestText" type="Label" parent="6Hallway/Player/QuestTracker"]
+offset_left = -303.0
+offset_top = -166.0
+offset_right = -151.0
+offset_bottom = -137.0
+label_settings = ExtResource("7_y8s53")
+
+[node name="QuestAnnounceText" type="Label" parent="6Hallway/Player/QuestTracker"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_top = -98.0
+offset_right = 64.0
+offset_bottom = -72.0
+grow_horizontal = 2
+text = "announcement"
+label_settings = ExtResource("8_m5wgu")
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Sprite2D" type="Sprite2D" parent="6Hallway/Player"]
+position = Vector2(-1, 6)
+scale = Vector2(0.0291772, 0.031195)
+texture = ExtResource("9_jmgjy")
+
+[node name="Dialogue" type="Control" parent="6Hallway/Player"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150.111
+offset_top = -73.4059
+offset_right = -150.111
+offset_bottom = -73.4059
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.511602, 0.468183)
+script = ExtResource("11_g3o6a")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="6Hallway/Player/Dialogue"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 10.0
+offset_right = 81.0
+offset_bottom = 53.0
+scale = Vector2(6.01128, 2.74721)
+texture = ExtResource("11_xilen")
+
+[node name="name" type="RichTextLabel" parent="6Hallway/Player/Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 1.99625
+offset_top = 5.82409
+offset_right = 133.996
+offset_bottom = 28.8241
+scale = Vector2(0.129526, 0.281777)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "name"
+
+[node name="text" type="RichTextLabel" parent="6Hallway/Player/Dialogue/NinePatchRect"]
+layout_mode = 0
+offset_left = 1.99625
+offset_top = 10.1922
+offset_right = 273.996
+offset_bottom = 77.1922
+scale = Vector2(0.15, 0.364)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "example text"
+
+[node name="text" type="RichTextLabel" parent="6Hallway/Player/Dialogue/NinePatchRect/text"]
+layout_mode = 0
+offset_left = 211.374
+offset_top = 37.3218
+offset_right = 483.375
+offset_bottom = 104.322
+scale = Vector2(0.550343, 0.692402)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "press 'enter'"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="6Hallway/Player"]
+offset_left = -212.584
+offset_top = -163.785
+offset_right = 199.416
+offset_bottom = -108.785
+scale = Vector2(2.34207, 1.81647)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("14_ja4wh")
+text = "12pm
+lunch"
+
+[node name="AreaBlocker" parent="6Hallway" instance=ExtResource("10_v8et4")]
+position = Vector2(-123.342, 33.007)
+scale = Vector2(56.5375, 8.3761)
+
+[node name="AreaBlocker2" parent="6Hallway" instance=ExtResource("10_v8et4")]
+position = Vector2(-682.724, 328.333)
+rotation = -1.56713
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker3" parent="6Hallway" instance=ExtResource("10_v8et4")]
+position = Vector2(-102.495, 418.668)
+scale = Vector2(57.0014, 9.00064)
+
+[node name="AreaBlocker4" parent="6Hallway" instance=ExtResource("10_v8et4")]
+position = Vector2(750.476, 340.494)
+rotation = -1.56713
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaExit" type="Area2D" parent="6Hallway"]
+position = Vector2(-301.809, 250.074)
+scale = Vector2(20.4448, 0.481207)
+script = ExtResource("13_hii0x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="6Hallway/AreaExit"]
+position = Vector2(-13.8939, -113.623)
+scale = Vector2(0.4605, 21.1918)
+shape = SubResource("RectangleShape2D_ffger")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="6Hallway/AreaExit"]
+offset_left = -20.0244
+offset_top = 307.35
+offset_right = 101.976
+offset_bottom = 374.35
+scale = Vector2(0.263326, 9.40711)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("14_ja4wh")
+text = "'E' - leave"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="6Hallway"]
+stream = ExtResource("15_suy2h")
+volume_db = -1.0
+autoplay = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 30.5207
+offset_top = 142.966
+offset_right = 152.521
+offset_bottom = 209.966
+scale = Vector2(2.06886, 2.45887)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("14_ja4wh")
+text = "main office"
+
+[connection signal="body_entered" from="6Hallway/AreaExit" to="6Hallway/AreaExit" method="_on_body_entered"]
+[connection signal="body_exited" from="6Hallway/AreaExit" to="6Hallway/AreaExit" method="_on_body_exited"]

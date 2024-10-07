@@ -1,0 +1,84 @@
+[gd_scene load_steps=8 format=3 uid="uid://hdre0yn1xks3"]
+
+[ext_resource type="PackedScene" uid="uid://bvg5dny32iw0x" path="res://Scenes/Player/Player.tscn" id="1_3ul3u"]
+[ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="2_63ent"]
+[ext_resource type="PackedScene" uid="uid://ckp2r52hlcfxn" path="res://Scenes/NPC's/Npc_OfficeWorker/npc_officeworker_scene.tscn" id="3_akbjw"]
+[ext_resource type="Script" path="res://Scenes/Interactables/area_exit2.gd" id="5_3cskc"]
+[ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="6_n16y6"]
+[ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="12_3g8g6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtoj4"]
+size = Vector2(25.4701, 24.0411)
+
+[node name="Boss\'sRoom" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("1_3ul3u")]
+position = Vector2(-18, 224)
+script = null
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Player"]
+offset_left = -383.0
+offset_top = -244.0
+offset_right = 29.0003
+offset_bottom = -189.0
+scale = Vector2(2.55285, 2.98239)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_3g8g6")
+text = "1pm
+task 2 - analyze data"
+
+[node name="AreaBlocker" parent="." instance=ExtResource("2_63ent")]
+position = Vector2(93, 219)
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker2" parent="." instance=ExtResource("2_63ent")]
+position = Vector2(-41, 395)
+rotation = -1.56713
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker3" parent="." instance=ExtResource("2_63ent")]
+position = Vector2(87, 408)
+scale = Vector2(20.5487, 9.04439)
+
+[node name="AreaBlocker4" parent="." instance=ExtResource("2_63ent")]
+position = Vector2(420, 385)
+rotation = -1.56713
+scale = Vector2(20.5487, 9.04439)
+
+[node name="coworker" parent="." instance=ExtResource("3_akbjw")]
+position = Vector2(282, 264)
+
+[node name="Node" type="Node" parent="."]
+
+[node name="AreaExit" type="Area2D" parent="."]
+position = Vector2(-39, 327)
+scale = Vector2(2.14892, 2.04107)
+script = ExtResource("5_3cskc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExit"]
+position = Vector2(-0.5, 5)
+shape = SubResource("RectangleShape2D_gtoj4")
+
+[node name="Label" type="Label" parent="AreaExit"]
+offset_left = -16.0
+offset_top = -25.0
+offset_right = 96.0
+offset_bottom = 1.0
+text = "'E' - exit"
+label_settings = ExtResource("6_n16y6")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="AreaExit"]
+offset_left = -16.5812
+offset_top = -15.5236
+offset_right = 105.419
+offset_bottom = 51.4764
+scale = Vector2(0.116, 4.144)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_3g8g6")
+text = "'E' - click"
+
+[connection signal="body_entered" from="AreaExit" to="AreaExit" method="_on_body_entered"]
+[connection signal="body_exited" from="AreaExit" to="AreaExit" method="_on_body_exited"]
