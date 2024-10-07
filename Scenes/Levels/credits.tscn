@@ -54,8 +54,8 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.736962, 0.714935)
 text = "Clocked In was conceptualized, written, drawn, and developed in 72 hours 
-by UCLA first years for Ludum Dare 56. None of us had any game 
-development experience (clearly).
+by UCLA freshmen for Ludum Dare 56. None of us had any game development 
+experience (clearly).
 Also, this game is not intended to disparage Lockheed Martin (please recruit me)"
 label_settings = ExtResource("2_y2nq2")
 

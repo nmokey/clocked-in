@@ -3,18 +3,29 @@
 [ext_resource type="PackedScene" uid="uid://bvg5dny32iw0x" path="res://Scenes/Player/Player.tscn" id="1_13smj"]
 [ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="2_dv77l"]
 [ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="3_pc034"]
-[ext_resource type="Script" path="res://Scenes/Levels/area_exitend.gd" id="4_bvaea"]
+[ext_resource type="Script" path="res://Scenes/Interactables/area_exitend.gd" id="4_bvaea"]
 [ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="5_0aw3p"]
 [ext_resource type="PackedScene" uid="uid://df62hc1ij2fja" path="res://Scenes/NPC's/Npc_Boss/npc_boss_scene.tscn" id="6_t0o3e"]
 [ext_resource type="Script" path="res://Scenes/NPC's/Npc_Boss/bossDialogue.gd" id="7_gubhl"]
-[ext_resource type="Texture2D" uid="uid://43mwp7wsduta" path="res://Art/Sprites/bossofficee.png" id="8_ou02i"]
-[ext_resource type="Script" path="res://Scripts/QuestGeneral/Quest.gd" id="9_0v2ag"]
-[ext_resource type="Script" path="res://Scenes/Levels/dialogueboss2.gd" id="10_1e8if"]
-[ext_resource type="Texture2D" uid="uid://b7yokmfihf45m" path="res://Scenes/dialogue/textbox.png" id="11_b1652"]
-[ext_resource type="AudioStream" uid="uid://r8i3r3wv1qeh" path="res://Art/Audio/Effects/bossupset.mp3" id="12_lxgnc"]
+[ext_resource type="Texture2D" uid="uid://43mwp7wsduta" path="res://Art/Sprites/bossoffice.png" id="8_ou02i"]
+[ext_resource type="Script" path="res://Scenes/dialogue/dialogueboss2.gd" id="10_1e8if"]
+[ext_resource type="Texture2D" uid="uid://b7yokmfihf45m" path="res://Art/Sprites/textbox.png" id="11_b1652"]
+[ext_resource type="AudioStream" uid="uid://r8i3r3wv1qeh" path="res://Art/Audio/bossupset.mp3" id="12_lxgnc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gtoj4"]
 size = Vector2(4.9295, 17.7145)
+
+[sub_resource type="GDScript" id="GDScript_7g1j4"]
+script/source = "@icon(\"res://Art/Icons/QuestSprite.png\")
+extends Node
+class_name Quest
+
+#This general Quest class defines what a quest is
+@export var quest_id : int
+@export var quest_name : String
+@export var quest_objective : Array[String]
+@export var quest_reward : int
+"
 
 [node name="BossOffice" type="Node2D"]
 
@@ -116,7 +127,7 @@ position = Vector2(165, 315)
 texture = ExtResource("8_ou02i")
 
 [node name="quest" type="Node" parent="."]
-script = ExtResource("9_0v2ag")
+script = SubResource("GDScript_7g1j4")
 quest_id = 2
 quest_name = "Search the basement"
 quest_objective = Array[String](["Find the end of the basement"])

@@ -4,12 +4,12 @@
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerIdleState.gd" id="2_27sdj"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerAttackState.gd" id="3_j10e5"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerWalkState.gd" id="4_tj6kn"]
-[ext_resource type="Script" path="res://Scenes/Levels/animation_player.gd" id="5_buqqh"]
+[ext_resource type="Script" path="res://Scenes/Interactables/animation_player.gd" id="5_buqqh"]
 [ext_resource type="Texture2D" uid="uid://dfvrbdvys27ey" path="res://Art/Sprites/cursorsprite.svg" id="6_81mdd"]
-[ext_resource type="Texture2D" uid="uid://54dhk7fdesfe" path="res://Scenes/Levels/spreadsheet.png" id="7_ruurj"]
+[ext_resource type="Texture2D" uid="uid://54dhk7fdesfe" path="res://Art/Sprites/spreadsheet.png" id="7_ruurj"]
 [ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="8_571wo"]
 [ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="9_tcb25"]
-[ext_resource type="Script" path="res://Scenes/Levels/area_exitspreadsheet.gd" id="10_lo6fu"]
+[ext_resource type="Script" path="res://Scenes/Interactables/area_exitspreadsheet.gd" id="10_lo6fu"]
 [ext_resource type="AudioStream" uid="uid://cmyps0ohffn2d" path="res://Art/Audio/typing3.mp3" id="11_d8buy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cnucc"]
@@ -105,10 +105,9 @@ initial_state = NodePath("Idle")
 script = ExtResource("2_27sdj")
 animator = NodePath("../../AnimationPlayer")
 
-[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator", "attacks")]
+[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
 script = ExtResource("3_j10e5")
 animator = NodePath("../../AnimationPlayer")
-attacks = [null, null]
 
 [node name="PunchAttack" type="Node" parent="Player/FSM/Attacking"]
 script = SubResource("GDScript_5xsr5")

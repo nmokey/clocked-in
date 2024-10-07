@@ -42,6 +42,7 @@ theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "example text"
 
 [node name="text" type="RichTextLabel" parent="NinePatchRect/text"]
+layout_mode = 0
 offset_left = 229.568
 offset_top = 45.0007
 offset_right = 501.568

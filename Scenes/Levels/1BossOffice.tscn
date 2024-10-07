@@ -6,15 +6,26 @@
 [ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="4_fow7f"]
 [ext_resource type="PackedScene" uid="uid://df62hc1ij2fja" path="res://Scenes/NPC's/Npc_Boss/npc_boss_scene.tscn" id="5_4j3l3"]
 [ext_resource type="Script" path="res://Scenes/NPC's/Npc_Boss/bossDialogue.gd" id="6_s421l"]
-[ext_resource type="Texture2D" uid="uid://43mwp7wsduta" path="res://Art/Sprites/bossofficee.png" id="7_vdnu7"]
-[ext_resource type="Script" path="res://Scripts/QuestGeneral/Quest.gd" id="8_3heuf"]
-[ext_resource type="Script" path="res://Scenes/Levels/dialogueboss.gd" id="10_3x84c"]
+[ext_resource type="Texture2D" uid="uid://43mwp7wsduta" path="res://Art/Sprites/bossoffice.png" id="7_vdnu7"]
+[ext_resource type="Script" path="res://Scenes/dialogue/dialogueboss.gd" id="10_3x84c"]
 [ext_resource type="Texture2D" uid="uid://bnbrlie6flg0g" path="res://Art/Sprites/dialoguebox.png" id="11_weax8"]
 [ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="12_87kp1"]
 [ext_resource type="AudioStream" uid="uid://cvljy6dt12egq" path="res://Art/Audio/9amconvo.wav" id="12_bpvwh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gtoj4"]
 size = Vector2(25.4701, 24.0411)
+
+[sub_resource type="GDScript" id="GDScript_7g1j4"]
+script/source = "@icon(\"res://Art/Icons/QuestSprite.png\")
+extends Node
+class_name Quest
+
+#This general Quest class defines what a quest is
+@export var quest_id : int
+@export var quest_name : String
+@export var quest_objective : Array[String]
+@export var quest_reward : int
+"
 
 [node name="BossOffice" type="Node2D"]
 
@@ -116,7 +127,7 @@ position = Vector2(165, 315)
 texture = ExtResource("7_vdnu7")
 
 [node name="quest" type="Node" parent="."]
-script = ExtResource("8_3heuf")
+script = SubResource("GDScript_7g1j4")
 quest_id = 2
 quest_name = "Search the basement"
 quest_objective = Array[String](["Find the end of the basement"])

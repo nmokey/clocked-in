@@ -1,11 +1,13 @@
 [
-	{"name": "Boss", "text": "Hey, Little Guy!"},
-	{"name": "Little Guy", "text": "hi boss"},
-	{"name": "Boss", "text": "Welcome back from your two-week paws."},
+	{"name": "Boss", "text": "Hey, Little Guy! Welcome back from your two-week paws."},
 	{"name": "Little Guy", "text": "its good to be here"},
 	{"name": "Boss", "text": "While you were gone, we assigned you to a new project."},
+	{"name": "Boss", "text": "It’s super top secret, so I’m not really allowed to tell you a whole lot."},
+	{"name": "Boss", "text": "I think legally, I can tell you that it *might* or *might not* involve the creation of a certain, uh..."},
+	{"name": "Boss", "text": "instrument."},
+	{"name": "Little Guy", "text": "instrument? i didnt know we made pianos"},
 	{"name": "Boss", "text": "I’ll email the details to you later,"},
-	{"name": "Boss", "text": "but I just need you to get up to speed and report back on how the team’s doing."},
+	{"name": "Boss", "text": "but right meow, I just need you to get up to speed and report back on how the team’s doing."},
 	{"name": "Little Guy", "text": "sounds simple enough"},
 	{"name": "Boss", "text": "Great! I trust you still remember where your desk is."},
 	{"name": "Boss", "text": "I’ll reach out soon!"}

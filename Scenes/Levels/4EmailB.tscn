@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerIdleState.gd" id="2_qq4ju"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerAttackState.gd" id="3_15w4p"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerWalkState.gd" id="4_ym6yt"]
-[ext_resource type="Script" path="res://Scenes/Levels/animation_player.gd" id="5_iq0ls"]
+[ext_resource type="Script" path="res://Scenes/Interactables/animation_player.gd" id="5_iq0ls"]
 [ext_resource type="Texture2D" uid="uid://dfvrbdvys27ey" path="res://Art/Sprites/cursorsprite.svg" id="9_5b7o6"]
 [ext_resource type="Texture2D" uid="uid://c2kevfjmr63st" path="res://Art/Sprites/4emailb.png" id="10_883vd"]
 [ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="11_h2kos"]
@@ -104,10 +104,9 @@ initial_state = NodePath("Idle")
 script = ExtResource("2_qq4ju")
 animator = NodePath("../../AnimationPlayer")
 
-[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator", "attacks")]
+[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
 script = ExtResource("3_15w4p")
 animator = NodePath("../../AnimationPlayer")
-attacks = [null, null]
 
 [node name="PunchAttack" type="Node" parent="Player/FSM/Attacking"]
 script = SubResource("GDScript_5xsr5")
@@ -213,7 +212,7 @@ offset_left = 7.24333
 offset_top = 5.06128
 offset_right = 129.243
 offset_bottom = 72.0613
-scale = Vector2(0.331929, 2.75905)
+scale = Vector2(0.362286, 2.69357)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("11_h2kos")

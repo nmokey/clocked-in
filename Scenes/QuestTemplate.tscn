@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://f7rmwehiqaax"]
+[gd_scene load_steps=2 format=3 uid="uid://cffa663hk726v"]
 
-[ext_resource type="Script" path="res://Scripts/QuestGeneral/Quest.gd" id="1_pvy20"]
+[sub_resource type="GDScript" id="GDScript_7g1j4"]
+script/source = "@icon(\"res://Art/Icons/QuestSprite.png\")
+extends Node
+class_name Quest
+
+#This general Quest class defines what a quest is
+@export var quest_id : int
+@export var quest_name : String
+@export var quest_objective : Array[String]
+@export var quest_reward : int
+"
 
 [node name="Quest" type="Node"]
-script = ExtResource("1_pvy20")
+script = SubResource("GDScript_7g1j4")

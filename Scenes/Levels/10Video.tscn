@@ -4,13 +4,13 @@
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerIdleState.gd" id="2_wosmp"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerAttackState.gd" id="3_gu13j"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerWalkState.gd" id="4_x6vn8"]
-[ext_resource type="Script" path="res://Scenes/Levels/animation_player.gd" id="5_yti5l"]
+[ext_resource type="Script" path="res://Scenes/Interactables/animation_player.gd" id="5_yti5l"]
 [ext_resource type="Texture2D" uid="uid://dfvrbdvys27ey" path="res://Art/Sprites/cursorsprite.svg" id="6_6bm7g"]
 [ext_resource type="Texture2D" uid="uid://bhprvnsjiqvds" path="res://Art/Sprites/trainingvid.png" id="7_5j6qt"]
 [ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="8_e3gjv"]
 [ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="9_lhhvj"]
-[ext_resource type="Script" path="res://Scenes/Levels/area_exitvideo.gd" id="10_3qyti"]
-[ext_resource type="Script" path="res://Scenes/Levels/dialoguevideo.gd" id="11_vdsd5"]
+[ext_resource type="Script" path="res://Scenes/Interactables/area_exitvideo.gd" id="10_3qyti"]
+[ext_resource type="Script" path="res://Scenes/dialogue/dialoguevideo.gd" id="11_vdsd5"]
 [ext_resource type="Texture2D" uid="uid://bnbrlie6flg0g" path="res://Art/Sprites/dialoguebox.png" id="12_djmur"]
 [ext_resource type="AudioStream" uid="uid://c8q5f8vjjyqi7" path="res://Art/Audio/tvpfinal2.mp3" id="13_ycg1p"]
 
@@ -89,6 +89,7 @@ size = Vector2(120.925, 36.4033)
 
 [node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
 top_level = true
+z_index = 2
 texture_filter = 1
 position = Vector2(320, 224)
 floor_stop_on_slope = false
@@ -107,10 +108,9 @@ initial_state = NodePath("Idle")
 script = ExtResource("2_wosmp")
 animator = NodePath("../../AnimationPlayer")
 
-[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator", "attacks")]
+[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
 script = ExtResource("3_gu13j")
 animator = NodePath("../../AnimationPlayer")
-attacks = [null, null]
 
 [node name="PunchAttack" type="Node" parent="Player/FSM/Attacking"]
 script = SubResource("GDScript_5xsr5")
@@ -152,7 +152,7 @@ scale = Vector2(0.59705, 0.59705)
 texture = ExtResource("7_5j6qt")
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="Email"]
-z_index = 5
+z_index = 1
 offset_left = -509.17
 offset_top = -311.532
 offset_right = -97.1698

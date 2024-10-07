@@ -1,20 +1,17 @@
-[gd_scene load_steps=32 format=3 uid="uid://cbn5m8l5kf2o0"]
+[gd_scene load_steps=29 format=3 uid="uid://cbn5m8l5kf2o0"]
 
 [ext_resource type="Script" path="res://Scripts/FSM/FiniteStateMachine.gd" id="1_250el"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerIdleState.gd" id="2_lq5ro"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerAttackState.gd" id="3_b1bjh"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerWalkState.gd" id="4_y1mgh"]
-[ext_resource type="Script" path="res://Scripts/QuestGeneral/QuestTracker.gd" id="5_qdvyi"]
-[ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="6_cgohk"]
-[ext_resource type="LabelSettings" uid="uid://1cnb4418rr7" path="res://Art/Fonts/pixelized_label_large.tres" id="7_ndf8m"]
 [ext_resource type="Texture2D" uid="uid://cdpvk8hmf1tnn" path="res://Scenes/Player/Sprite/goober.png" id="8_youvo"]
 [ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="9_w8pbm"]
 [ext_resource type="PackedScene" uid="uid://ckp2r52hlcfxn" path="res://Scenes/NPC's/Npc_OfficeWorker/npc_officeworker_scene.tscn" id="10_21idk"]
 [ext_resource type="PackedScene" uid="uid://df62hc1ij2fja" path="res://Scenes/NPC's/Npc_Boss/npc_boss_scene.tscn" id="11_jk14w"]
 [ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="13_0o40h"]
-[ext_resource type="Script" path="res://Scenes/Levels/area_exitofficeC.gd" id="13_75yct"]
+[ext_resource type="Script" path="res://Scenes/Interactables/area_exitofficeC.gd" id="13_75yct"]
 [ext_resource type="Texture2D" uid="uid://nl4o654ml1qn" path="res://Art/Sprites/office.png" id="14_qrnyn"]
-[ext_resource type="Script" path="res://Scenes/Levels/dialoguemainc.gd" id="15_yqlmb"]
+[ext_resource type="Script" path="res://Scenes/dialogue/dialoguemainc.gd" id="15_yqlmb"]
 [ext_resource type="Texture2D" uid="uid://bnbrlie6flg0g" path="res://Art/Sprites/dialoguebox.png" id="16_rkpys"]
 [ext_resource type="AudioStream" uid="uid://btb8ci71s8661" path="res://Art/Audio/bosslong3.mp3" id="17_3bof0"]
 [ext_resource type="AudioStream" uid="uid://cy0ldtexs8ifu" path="res://Art/Audio/My_Song_2-_1_.ogg" id="18_w5hy0"]
@@ -114,10 +111,9 @@ initial_state = NodePath("Idle")
 script = ExtResource("2_lq5ro")
 animator = NodePath("../../AnimationPlayer")
 
-[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator", "attacks")]
+[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
 script = ExtResource("3_b1bjh")
 animator = NodePath("../../AnimationPlayer")
-attacks = [null, null]
 
 [node name="PunchAttack" type="Node" parent="Player/FSM/Attacking"]
 script = SubResource("GDScript_5xsr5")
@@ -152,32 +148,6 @@ libraries = {
 "": SubResource("AnimationLibrary_gtuut")
 }
 
-[node name="QuestTracker" type="Node2D" parent="Player" node_paths=PackedStringArray("quest_info", "quest_announcement")]
-script = ExtResource("5_qdvyi")
-quest_info = NodePath("QuestText")
-quest_announcement = NodePath("QuestAnnounceText")
-
-[node name="QuestText" type="Label" parent="Player/QuestTracker"]
-offset_left = -303.0
-offset_top = -166.0
-offset_right = -151.0
-offset_bottom = -137.0
-label_settings = ExtResource("6_cgohk")
-
-[node name="QuestAnnounceText" type="Label" parent="Player/QuestTracker"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -64.0
-offset_top = -98.0
-offset_right = 64.0
-offset_bottom = -72.0
-grow_horizontal = 2
-text = "announcement"
-label_settings = ExtResource("7_ndf8m")
-horizontal_alignment = 1
-uppercase = true
-
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 position = Vector2(-1, 6)
 scale = Vector2(0.0291772, 0.031195)
@@ -200,11 +170,11 @@ scale = Vector2(30.6463, 9.04439)
 
 [node name="AreaBlocker5" parent="." instance=ExtResource("9_w8pbm")]
 position = Vector2(26, 167)
-scale = Vector2(14.7387, 6.78404)
+scale = Vector2(13.9714, 6.78404)
 
 [node name="AreaBlocker6" parent="." instance=ExtResource("9_w8pbm")]
 position = Vector2(25, 83)
-scale = Vector2(14.7387, 6.78404)
+scale = Vector2(14.2, 6.71661)
 
 [node name="AreaBlocker2" parent="." instance=ExtResource("9_w8pbm")]
 position = Vector2(-164, 340)
@@ -279,16 +249,16 @@ rotation = -1.56713
 scale = Vector2(21.4625, 6.90076)
 
 [node name="coworker" parent="." instance=ExtResource("10_21idk")]
-position = Vector2(-82, 33)
+position = Vector2(116, 182)
 
 [node name="coworker2" parent="." instance=ExtResource("10_21idk")]
-position = Vector2(319, 471)
+position = Vector2(404, 144)
 
 [node name="coworker3" parent="." instance=ExtResource("10_21idk")]
-position = Vector2(225, 322)
+position = Vector2(579, 18)
 
 [node name="coworker4" parent="." instance=ExtResource("10_21idk")]
-position = Vector2(-120, 347)
+position = Vector2(412, 467)
 
 [node name="Node" type="Node" parent="."]
 
@@ -299,7 +269,6 @@ script = ExtResource("13_75yct")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaExit"]
 position = Vector2(0.221764, 0.16127)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_gtoj4")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="AreaExit"]
@@ -323,6 +292,7 @@ texture = ExtResource("14_qrnyn")
 position = Vector2(19, 453)
 
 [node name="Dialogue" type="Control" parent="boss"]
+z_index = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -384,6 +354,24 @@ autoplay = true
 stream = ExtResource("18_w5hy0")
 volume_db = -1.0
 autoplay = true
+
+[node name="AreaBlocker19" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(396, 88)
+scale = Vector2(3.49534, 1.93267)
+
+[node name="AreaBlocker20" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(396, 151)
+scale = Vector2(3.49534, 1.93267)
+
+[node name="AreaBlocker21" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(382, 126)
+rotation = -1.56713
+scale = Vector2(2.95544, 3.63638)
+
+[node name="AreaBlocker22" parent="." instance=ExtResource("9_w8pbm")]
+position = Vector2(460, 125)
+rotation = -1.56713
+scale = Vector2(2.95544, 3.63638)
 
 [connection signal="body_entered" from="AreaExit" to="AreaExit" method="_on_body_entered"]
 [connection signal="body_exited" from="AreaExit" to="AreaExit" method="_on_body_exited"]

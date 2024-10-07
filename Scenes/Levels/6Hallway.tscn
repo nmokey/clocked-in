@@ -1,18 +1,15 @@
-[gd_scene load_steps=29 format=3 uid="uid://cosmv0di4nili"]
+[gd_scene load_steps=26 format=3 uid="uid://cosmv0di4nili"]
 
 [ext_resource type="Texture2D" uid="uid://hqegpc6ti0ek" path="res://Art/Sprites/6hallway.png" id="1_ortks"]
 [ext_resource type="Script" path="res://Scripts/FSM/FiniteStateMachine.gd" id="2_hmlrn"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerIdleState.gd" id="3_y5u7s"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerAttackState.gd" id="4_1vvfc"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerWalkState.gd" id="5_wyege"]
-[ext_resource type="Script" path="res://Scripts/QuestGeneral/QuestTracker.gd" id="6_nl7sp"]
-[ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="7_y8s53"]
-[ext_resource type="LabelSettings" uid="uid://1cnb4418rr7" path="res://Art/Fonts/pixelized_label_large.tres" id="8_m5wgu"]
 [ext_resource type="Texture2D" uid="uid://bsbfnxdujanep" path="res://Art/Sprites/goobersandwich.png" id="9_jmgjy"]
 [ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="10_v8et4"]
 [ext_resource type="Script" path="res://Scenes/dialogue/dialogue6.gd" id="11_g3o6a"]
 [ext_resource type="Texture2D" uid="uid://bnbrlie6flg0g" path="res://Art/Sprites/dialoguebox.png" id="11_xilen"]
-[ext_resource type="Script" path="res://Scenes/Levels/area_exithall.gd" id="13_hii0x"]
+[ext_resource type="Script" path="res://Scenes/Interactables/area_exithall.gd" id="13_hii0x"]
 [ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="14_ja4wh"]
 [ext_resource type="AudioStream" uid="uid://b3dbwvyjcjlfr" path="res://Art/Audio/lg1.mp3" id="15_suy2h"]
 
@@ -117,10 +114,9 @@ initial_state = NodePath("Idle")
 script = ExtResource("3_y5u7s")
 animator = NodePath("../../AnimationPlayer")
 
-[node name="Attacking" type="Node" parent="6Hallway/Player/FSM" node_paths=PackedStringArray("animator", "attacks")]
+[node name="Attacking" type="Node" parent="6Hallway/Player/FSM" node_paths=PackedStringArray("animator")]
 script = ExtResource("4_1vvfc")
 animator = NodePath("../../AnimationPlayer")
-attacks = [null, null]
 
 [node name="PunchAttack" type="Node" parent="6Hallway/Player/FSM/Attacking"]
 script = SubResource("GDScript_5xsr5")
@@ -155,32 +151,6 @@ libraries = {
 "": SubResource("AnimationLibrary_gtuut")
 }
 
-[node name="QuestTracker" type="Node2D" parent="6Hallway/Player" node_paths=PackedStringArray("quest_info", "quest_announcement")]
-script = ExtResource("6_nl7sp")
-quest_info = NodePath("QuestText")
-quest_announcement = NodePath("QuestAnnounceText")
-
-[node name="QuestText" type="Label" parent="6Hallway/Player/QuestTracker"]
-offset_left = -303.0
-offset_top = -166.0
-offset_right = -151.0
-offset_bottom = -137.0
-label_settings = ExtResource("7_y8s53")
-
-[node name="QuestAnnounceText" type="Label" parent="6Hallway/Player/QuestTracker"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -64.0
-offset_top = -98.0
-offset_right = 64.0
-offset_bottom = -72.0
-grow_horizontal = 2
-text = "announcement"
-label_settings = ExtResource("8_m5wgu")
-horizontal_alignment = 1
-uppercase = true
-
 [node name="Sprite2D" type="Sprite2D" parent="6Hallway/Player"]
 position = Vector2(-1, 6)
 scale = Vector2(0.0291772, 0.031195)
@@ -191,13 +161,13 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -150.111
-offset_top = -73.4059
-offset_right = -150.111
-offset_bottom = -73.4059
+offset_left = -123.4
+offset_top = -55.53
+offset_right = -123.4
+offset_bottom = -55.53
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.511602, 0.468183)
+scale = Vector2(0.416091, 0.380778)
 script = ExtResource("11_g3o6a")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="6Hallway/Player/Dialogue"]
@@ -235,7 +205,7 @@ offset_left = 211.374
 offset_top = 37.3218
 offset_right = 483.375
 offset_bottom = 104.322
-scale = Vector2(0.550343, 0.692402)
+scale = Vector2(0.663484, 0.835846)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 text = "press 'enter'"
 

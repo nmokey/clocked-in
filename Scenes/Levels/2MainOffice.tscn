@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ywh62i5toub8"]
+[gd_scene load_steps=25 format=3 uid="uid://ywh62i5toub8"]
 
 [ext_resource type="Script" path="res://Scripts/FSM/FiniteStateMachine.gd" id="1_kayk7"]
 [ext_resource type="PackedScene" uid="uid://ceoo6gamb4olk" path="res://Scenes/Interactables/Area_Blocker.tscn" id="2_cox6g"]
@@ -6,12 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://ckp2r52hlcfxn" path="res://Scenes/NPC's/Npc_OfficeWorker/npc_officeworker_scene.tscn" id="3_y0fqs"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerAttackState.gd" id="3_ybxjt"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/States/PlayerWalkState.gd" id="4_vpvlm"]
-[ext_resource type="Script" path="res://Scripts/QuestGeneral/QuestTracker.gd" id="5_247oi"]
 [ext_resource type="Texture2D" uid="uid://nl4o654ml1qn" path="res://Art/Sprites/office.png" id="6_1b4ab"]
-[ext_resource type="LabelSettings" uid="uid://da8inon5cmt2r" path="res://Art/Fonts/pixelized_label.tres" id="6_2rtw0"]
-[ext_resource type="LabelSettings" uid="uid://1cnb4418rr7" path="res://Art/Fonts/pixelized_label_large.tres" id="7_aww4a"]
 [ext_resource type="Texture2D" uid="uid://cdpvk8hmf1tnn" path="res://Scenes/Player/Sprite/goober.png" id="8_kb6fh"]
-[ext_resource type="Script" path="res://Scenes/Levels/area_exitoffice.gd" id="11_ag7ru"]
+[ext_resource type="Script" path="res://Scenes/Interactables/area_exitoffice.gd" id="11_ag7ru"]
 [ext_resource type="FontFile" uid="uid://ci60w53hdbiqe" path="res://Art/Fonts/m3x6.ttf" id="12_mels0"]
 [ext_resource type="AudioStream" uid="uid://cy0ldtexs8ifu" path="res://Art/Audio/My_Song_2-_1_.ogg" id="14_lwq7i"]
 
@@ -110,10 +107,9 @@ initial_state = NodePath("Idle")
 script = ExtResource("2_xv4jj")
 animator = NodePath("../../AnimationPlayer")
 
-[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator", "attacks")]
+[node name="Attacking" type="Node" parent="Player/FSM" node_paths=PackedStringArray("animator")]
 script = ExtResource("3_ybxjt")
 animator = NodePath("../../AnimationPlayer")
-attacks = [null, null]
 
 [node name="PunchAttack" type="Node" parent="Player/FSM/Attacking"]
 script = SubResource("GDScript_5xsr5")
@@ -148,32 +144,6 @@ libraries = {
 "": SubResource("AnimationLibrary_gtuut")
 }
 
-[node name="QuestTracker" type="Node2D" parent="Player" node_paths=PackedStringArray("quest_info", "quest_announcement")]
-script = ExtResource("5_247oi")
-quest_info = NodePath("QuestText")
-quest_announcement = NodePath("QuestAnnounceText")
-
-[node name="QuestText" type="Label" parent="Player/QuestTracker"]
-offset_left = -303.0
-offset_top = -166.0
-offset_right = -151.0
-offset_bottom = -137.0
-label_settings = ExtResource("6_2rtw0")
-
-[node name="QuestAnnounceText" type="Label" parent="Player/QuestTracker"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -64.0
-offset_top = -98.0
-offset_right = 64.0
-offset_bottom = -72.0
-grow_horizontal = 2
-text = "announcement"
-label_settings = ExtResource("7_aww4a")
-horizontal_alignment = 1
-uppercase = true
-
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 position = Vector2(-1, 6)
 scale = Vector2(0.0291772, 0.031195)
@@ -184,7 +154,7 @@ offset_left = -373.0
 offset_top = -319.0
 offset_right = 39.0003
 offset_bottom = -264.0
-scale = Vector2(2.55285, 2.98239)
+scale = Vector2(2.06411, 2.41141)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("12_mels0")
 text = "10am
@@ -197,6 +167,24 @@ scale = Vector2(30.6463, 9.04439)
 [node name="AreaBlocker5" parent="." instance=ExtResource("2_cox6g")]
 position = Vector2(26, 167)
 scale = Vector2(14.7387, 6.78404)
+
+[node name="AreaBlocker19" parent="." instance=ExtResource("2_cox6g")]
+position = Vector2(396, 88)
+scale = Vector2(3.49534, 1.93267)
+
+[node name="AreaBlocker20" parent="." instance=ExtResource("2_cox6g")]
+position = Vector2(396, 151)
+scale = Vector2(3.49534, 1.93267)
+
+[node name="AreaBlocker21" parent="." instance=ExtResource("2_cox6g")]
+position = Vector2(382, 126)
+rotation = -1.56713
+scale = Vector2(2.95544, 3.63638)
+
+[node name="AreaBlocker22" parent="." instance=ExtResource("2_cox6g")]
+position = Vector2(460, 125)
+rotation = -1.56713
+scale = Vector2(2.95544, 3.63638)
 
 [node name="AreaBlocker6" parent="." instance=ExtResource("2_cox6g")]
 position = Vector2(25, 83)
