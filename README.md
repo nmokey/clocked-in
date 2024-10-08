@@ -6,8 +6,8 @@ Play as Little Guy as you navigate a relatively regular day at the office with r
 
 ## Playing the game
 **Browser** - Play in browser at [itch.io](https://nmokey.itch.io/clocked-in).  
-**MacOS** - Download and open the `.dmg`, then right click the `.app` and click **open** from the context menu. If there's a warning, right click the icon and click **open** again.  
-**Windows** - Download both the `.exe` and `.pck`, and open the `.exe`.   
+**MacOS** - [Download](https://drive.google.com/file/d/1_znW5toLoreonPokZ0N2Sa9HsKSxX2j_/view?usp=sharing) and open the `.dmg`, then right click the `.app` and click **open** from the context menu. If there's a warning, right click the icon and click **open** again.  
+**Windows** - [Download](https://drive.google.com/drive/folders/1soXY0mT7M7YBuw9UeKlyuv5iuVhPuyPh?usp=drive_link) both the `.exe` and `.pck`, and open the `.exe`.   
 
 ## Team
 |Role| Team |
