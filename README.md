@@ -1,69 +1,26 @@
-# TopdownStarter
-![Top-down Starter Project By ForlornU](https://github.com/ForlornU/TopdownStarter/assets/101473036/5158caec-a7d6-42a1-af80-54cbdb25588b)
+# Clocked In  
+<img src="https://github.com/user-attachments/assets/8eb7a09d-b251-4aef-b888-d0bae642a55b" width="500">  
 
-2D Pixelart, TopDown, action Starter Project
-Contains all the basic ingredients you need to get started creating a game.
+workin' 9 to 5 (what a way to make a livin'!)  
+Play as Little Guy as you navigate a relatively regular day at the office with reports, nukes, and annoying coworkers. wait, what was that second thing again?
 
-# This project includes:
-- 2 unique levels with different tile-sets
-- A simple but fully functional enemy
-- Talking NPC's
-- Quest tracker system
-- 'Coins' to pick up
-- 2d Lights and shadows
-- Music and sound effects
-- Custom icons
+## Playing the game
+**Browser** - Play in browser at [itch.io](https://nmokey.itch.io/clocked-in).  
+**MacOS** - Download and open the `.dmg`, then right click the `.app` and click **open** from the context menu. If there's a warning, right click the icon and click **open** again.  
+**Windows** - Download both the `.exe` and `.pck`, and open the `.exe`.   
 
-# Good examples of:
-	- Signals
-	- Tweening
-	- Timers
+## Team
+|Role| Team |
+|--|--|
+| Project Lead | Ryan Zheng |
+| Programmers | Ryan Zheng, Isaac Lee, Abhiram Voleti |
+| Art | Erin Lee, Kavish Pattani, Nu Tran  |
+| Music & Audio | Aarav Kakad, Chelsea Zhou  |
+| Writer | Maggie Kwan  |
 
-# On the more technical side:
-- 25 different unique Scripts (.gd)
-- Finite state machines on both player and enemies
-- Inheritance across similar classes like states and units (player and enemy)
+## About
+[*Clocked In*](https://ldjam.com/events/ludum-dare/56/clocked-in) was developed as a weekend project by a bunch of UCLA freshmen who all had zero experience in game development (so you'll have to excuse the jankiness and the fact that the game softlocks whenever you click). We made it for [Ludum Dare 56](https://ldjam.com/events/ludum-dare/56), hosted at UCLA by ACM Studio.  If you participated in Ludum Dare, please leave feedback on our game :)  
 
-# Screenshots
-![Screenshot](https://github.com/ForlornU/Images/blob/6c532d99b4435ffb452bdde33de46a07755d6f64/QuestUpdate.png)
+*Clocked In* was developed in Godot, and all sprites were made in Photoshop or pixel art editors. The music and sound effects were composed in GarageBand. All assets in the game are original and were made in the 72-hour window.  
 
-![Screenshot](https://github.com/ForlornU/Images/blob/5aa19b63af0e5c04387c91e10b24adf1ae322eef/GameplayPic.png)
-
-![Screenshot](https://github.com/ForlornU/Images/blob/6402e2b16b4515ed8c3ad3dccde223aca574fdc0/basementPic.png)
-
-![Screenshot](https://github.com/ForlornU/Images/blob/6402e2b16b4515ed8c3ad3dccde223aca574fdc0/basement02pic.png)
-
-## Getting Started
-
-To get started with this project, follow these steps:
-
-1. Clone the repository to your local machine.
-2. Open the project with Godot 4.2 or later
-3. Play the included levels, explore the different scripts
-4. Continue working on the project and change things as you go
-	/ Import snippets or parts into your own projects
-
-I am also creating a series of videos to walk you though the different parts of this project as well as a written guide
-
-- Brief overview: 
-	- https://youtu.be/eD9dirVaffA
-- Finite State Machine:
-	- https://youtu.be/i0Y6anqiJ-g
- - Update 1.3 & 1.4 - Quests, combat and animations
- 	- https://youtu.be/mayNWb_DpJ8
-- Coming soon:
-	- More tutorials for the different parts of this project
-
-Godot Asset Library Link:
-https://godotengine.org/asset-library/asset/2397
-
-My other Godot starter project:
-https://github.com/ForlornU/Fishy-example-game/tree/main
-
-Created by ForlornU
-Consider making me work faster with a coffee:
-https://www.buymeacoffee.com/forlornu
-
-Attribution:
-m3x6 font was created by Daniel Linssen
-https://managore.itch.io/m3x6
+Thanks for playing!
